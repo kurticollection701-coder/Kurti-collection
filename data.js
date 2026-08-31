@@ -1,0 +1,1 @@
+const STORE_DATA={brand:"Kurti Collection",title:"नई कलेक्शन",subtitle:"अपनी पसंद का कपड़ा चुनें और WhatsApp पर ऑर्डर करें",whatsapp:"919119392297",products:[{name:"Sample Kurti",price:"750",image:"https://placehold.co/600x700?text=Kurti",description:"अपनी फोटो और जानकारी बदलें"}]};
