@@ -1,5 +1,4 @@
 const images = [
-"002bbd3f53b583c47a5dc2a7324cc31c (1).jpg",
 "002bbd3f53b583c47a5dc2a7324cc31c.jpg",
 "01607785e36ac09f2406f4dde1ca14ae.jpg",
 "03d549ec2df7ff134e98fabc4bbb082b.jpg",
@@ -52,8 +51,6 @@ const images = [
 "87790f222da1f000fc86b7f7961172b4.jpg",
 "880c9d10ebcd71a1d5e8fc1efdec38f5.jpg",
 "8842aff4278e26a0105c0063f9045248.jpg",
-"8cdbb8572c6fadfb90ce1d0aedc83e90 (1).jpg",
-"8cdbb8572c6fadfb90ce1d0aedc83e90 (2).jpg",
 "8cdbb8572c6fadfb90ce1d0aedc83e90.jpg",
 "8fa94b2c0e52e19914eca23604b86bc2.jpg",
 "94b215981be9525ef5bfc93f32ee4056.jpg",
@@ -68,7 +65,6 @@ const images = [
 "bfcdd82bd4c07ab43d03a4da8efc71d1.jpg",
 "c02266f734daede4d65a5dba3c0964c8.jpg",
 "c18a7a33cfa33e5a463523523f85059e.jpg",
-"c286d21ab2ab63ed928a4ca765855deb (1).jpg",
 "c286d21ab2ab63ed928a4ca765855deb.jpg",
 "c4c8b3f3dec374db88ba31f00678d871.jpg",
 "c4d242a29b8d7ce95a4a3798bc7e4a36.jpg",
@@ -99,16 +95,28 @@ const images = [
 "f48b29b8caa2907f7ec9487a2e13266e.jpg"
 ];
 
+const descriptions = [
+"Elegant Cotton Kurti with a beautiful and stylish finish. Comfortable for everyday wear and special occasions.",
+"Beautiful contemporary Kurti design with a graceful look. Soft Cotton fabric provides comfortable everyday wear.",
+"Stylish Cotton Kurti with attractive detailing and a refined appearance. Easy to style for different occasions.",
+"Fashionable Kurti design with an eye-catching pattern. Comfortable Cotton fabric makes it perfect for regular wear."
+];
+
+const products = images.map((image, i) => ({
+  name: `Fancy Kurti Design ${String(i + 1).padStart(2, "0")}`,
+  price: "560",
+  images: [image],
+  description: descriptions[i % descriptions.length]
+}));
+
 const STORE_DATA = {
-  brand: "फैंसी ड्रेस",
-  title: "नई कलेक्शन",
-  subtitle: "अपनी पसंद की कुर्ती चुनें और WhatsApp पर ऑर्डर करें",
+  brand: "Online Shopping",
+  title: "Fancy Kurti Collection",
+  subtitle: "Explore our latest designs and order your favorite style on WhatsApp.",
   whatsapp: "919119392297",
 
-  products: images.map((image, i) => ({
-    name: `फैंसी कुर्ती डिज़ाइन ${String(i + 1).padStart(2, "0")}`,
-    price: "560",
-    image: image,
-    description: "सुंदर फैंसी कुर्ती डिज़ाइन"
-  }))
+  coverImage: "file_000000002880820ba259f14d92660b69.png",
+  profileImage: "23caf061f0ed205725b8495c7b94f6ab.jpg",
+
+  products: products
 };
