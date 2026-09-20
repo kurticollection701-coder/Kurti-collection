@@ -99,31 +99,39 @@ const imageFiles = [
 ];
 
 const descriptions = [
-  "Elegant Cotton Kurti with a beautiful stylish finish. Comfortable for everyday wear and special occasions.",
-  "Beautiful contemporary Cotton Kurti with a graceful look. Soft fabric provides comfortable everyday wear.",
-  "Stylish Cotton Kurti with attractive detailing and a refined appearance. Easy to style for different occasions.",
-  "Fashionable Cotton Kurti with an eye-catching design. Comfortable fabric makes it perfect for regular wear."
+  "Elegant Cotton Kurti with a beautiful stylish finish. Comfortable for everyday wear and suitable for casual and special occasions.",
+  "Beautiful contemporary Cotton Kurti with a graceful look. Soft fabric provides comfortable everyday wear and easy styling.",
+  "Stylish Cotton Kurti with attractive detailing and a refined appearance. A comfortable choice for everyday and special occasions.",
+  "Fashionable Cotton Kurti with an eye-catching design. Comfortable fabric makes it perfect for regular and casual wear."
 ];
 
 const products = imageFiles.map((file, index) => ({
   name: `Fancy Kurti Design ${String(index + 1).padStart(2, "0")}`,
   price: "560",
   fabric: "Cotton",
-  images: [IMAGE_BASE + file],
+  images: [
+    IMAGE_BASE + encodeURIComponent(file)
+  ],
   description: descriptions[index % descriptions.length]
 }));
 
-const STORE_DATA = {
+window.STORE_DATA = {
   brand: "Fancy Dress",
+
   title: "Fancy Kurti Collection",
-  subtitle: "Explore our latest designs and order your favorite style on WhatsApp.",
+
+  subtitle:
+    "Explore our latest Cotton Kurti designs and order your favorite style on WhatsApp.",
+
   whatsapp: "919119392297",
 
   coverImage:
-    IMAGE_BASE + "file_000000002880820ba259f14d92660b69.png",
+    IMAGE_BASE +
+    "file_000000002880820ba259f14d92660b69.png",
 
   profileImage:
-    IMAGE_BASE + "23caf061f0ed205725b8495c7b94f6ab.jpg",
+    IMAGE_BASE +
+    "23caf061f0ed205725b8495c7b94f6ab.jpg",
 
   products: products
 };
