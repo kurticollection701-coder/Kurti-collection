@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unlimited Store Admin</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6f8;font-family:Arial,sans-serif;color:#222}.wrap{max-width:1100px;margin:auto;padding:18px}
+.panel{background:#fff;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 2px 12px #0001}h1{margin-top:0}
+input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:9px;margin:6px 0 12px}textarea{min-height:100px;resize:vertical}
+button{border:0;border-radius:9px;padding:10px 13px;font-weight:700;cursor:pointer;margin:3px}.primary{background:#111827;color:#fff}.green{background:#25d366;color:#fff}.red{background:#ef4444;color:#fff}.gray{background:#e5e7eb}
+.hidden{display:none}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}.item{border:1px solid #e5e7eb;border-radius:12px;padding:12px;position:relative}.preview{width:100%;height:230px;object-fit:cover;border-radius:9px;background:#eee}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}.thumb{position:relative}.thumb img{width:100%;height:62px;object-fit:cover;border-radius:7px}.thumb button{position:absolute;right:-2px;top:-2px;width:23px;height:23px;padding:0;border-radius:50%;background:#ef4444;color:#fff}.addTile{height:62px;border:2px dashed #bbb;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:25px;color:#777;cursor:pointer}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.note{font-size:13px;line-height:1.5;color:#666}.stats{font-weight:700;margin-bottom:10px}
+#login{max-width:420px;margin:50px auto}.small{font-size:12px;color:#777}
+@media(max-width:650px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="login" class="panel">
+<h1>Unlimited Store Admin</h1>
+<p class="note">This login is a client-side lock for a static GitHub Pages site. It is not equivalent to server-side authentication; do not treat credentials stored in a static HTML file as secret.</p>
+<input id="email" type="email" placeholder="Admin email">
+<input id="password" type="password" placeholder="Password">
+<button class="primary" onclick="login()">Login</button>
+<div id="loginMsg"></div>
+</div>
+
+<div id="app" class="wrap hidden">
+<h1>Unlimited Store — Admin Control</h1>
+
+<div class="panel">
+<h2>Store Settings</h2>
+<div class="row">
+ <div><label>WhatsApp number</label><input id="wa"></div>
+ <div><label>Default product price</label><input id="price" type="number"></div>
+</div>
+<label>Store bio</label><textarea id="bio"></textarea>
+<label>Cover photo</label><input id="coverFile" type="file" accept="image/*">
+<label>Profile photo</label><input id="profileFile" type="file" accept="image/*">
+<button class="green" onclick="saveSettings()">Save Settings</button>
+</div>
+
+<div class="panel">
+<h2>Add Product</h2>
+<div class="row">
+ <div><label>Product number</label><input id="pid" placeholder="US001"></div>
+ <div><label>Product name</label><input id="pname" placeholder="Girls Kurti"></div>
+</div>
+<label>Price</label><input id="pprice" type="number" value="560">
+<label>Four-line design description</label>
+<textarea id="pdesc" placeholder="Elegant embroidery design.
+Comfortable Fiber Cotton fabric.
+Beautiful finishing and modern look.
+Suitable for everyday and festive wear."></textarea>
+<label>Product photos (up to 4)</label>
+<input id="pfiles" type="file" accept="image/*" multiple>
+<button class="green" onclick="addProduct()">Add Product</button>
+<p class="note">The system rejects duplicate image files and duplicate product numbers.</p>
+</div>
+
+<div class="panel">
+<h2>Products</h2>
+<div id="stats" class="stats"></div>
+<div id="products" class="grid"></div>
+</div>
+
+<div class="panel">
+<h2>Publish to GitHub</h2>
+<p class="note">GitHub Pages is static. Admin changes are saved in this browser first. Use <b>Download updated data.js</b>, then replace data.js in your GitHub repository. If you change product images, the images themselves must also be available in the published repository or as public image URLs.</p>
+<button class="primary" onclick="exportDataJs()">Download updated data.js</button>
+<button class="gray" onclick="exportBackup()">Download JSON backup</button>
+<button class="gray" onclick="importBackup()">Import JSON backup</button>
+<input id="backupFile" type="file" accept=".json" style="display:none">
+<button class="red" onclick="logout()">Logout</button>
+</div>
+</div>
+
+<script>
+const ADMIN_EMAIL="kurticollection701@gmail.com";
+const ADMIN_PASSWORD="pooja@@2";
+
+const DEFAULT={
+ settings:{
+  storeName:"Unlimited Store",whatsapp:"9119392297",price:560,fiber:"Fiber Cotton",sizeText:"All size available ✅",
+  bio:"All types of kurtis and kids clothing are available here at the best quality and best price.\\n10-day return policy is available. If there is any issue or problem with the dress, you can also request an exchange.\\nWhatsApp: 9119392297\\nUnlimited Store",
+  coverPhoto:"",profilePhoto:""
+ },products:[]
+};
+
+let data=load();
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function load(){try{return JSON.parse(localStorage.getItem("unlimited_store_data"))||clone(DEFAULT)}catch(e){return clone(DEFAULT)}}
+function save(){localStorage.setItem("unlimited_store_data",JSON.stringify(data))}
+function login(){
+ if(document.getElementById("email").value===ADMIN_EMAIL&&document.getElementById("password").value===ADMIN_PASSWORD){
+  sessionStorage.setItem("unlimited_store_auth","1");showApp();
+ }else document.getElementById("loginMsg").textContent="Invalid login details.";
+}
+function showApp(){document.getElementById("login").classList.add("hidden");document.getElementById("app").classList.remove("hidden");fill();renderProducts()}
+function logout(){sessionStorage.removeItem("unlimited_store_auth");location.reload()}
+if(sessionStorage.getItem("unlimited_store_auth")==="1")showApp();
+
+function fill(){
+ document.getElementById("wa").value=data.settings.whatsapp||"9119392297";
+ document.getElementById("price").value=data.settings.price||560;
+ document.getElementById("bio").value=data.settings.bio||"";
+}
+function fileData(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
+function duplicateImage(img){
+ return data.products.some(p=>(p.images||[]).includes(img));
+}
+async function saveSettings(){
+ data.settings.whatsapp=document.getElementById("wa").value.trim().replace(/\D/g,"");
+ data.settings.price=Number(document.getElementById("price").value)||560;
+ data.settings.bio=document.getElementById("bio").value;
+ const cf=document.getElementById("coverFile").files[0],pf=document.getElementById("profileFile").files[0];
+ if(cf)data.settings.coverPhoto=await fileData(cf);
+ if(pf)data.settings.profilePhoto=await fileData(pf);
+ save();alert("Settings saved. Download data.js to publish them on GitHub.");
+}
+async function readUniqueFiles(fileList, existing=[]){
+ const out=[],seen=new Set(existing);
+ for(const f of [...fileList]){
+  if(out.length>=4)break;
+  const img=await fileData(f);
+  if(seen.has(img))continue;
+  seen.add(img);out.push(img);
+ }
+ return out;
+}
+async function addProduct(){
+ const id=document.getElementById("pid").value.trim()||("US"+String(Date.now()).slice(-6));
+ const name=document.getElementById("pname").value.trim()||"Product";
+ const price=Number(document.getElementById("pprice").value)||560;
+ const description=document.getElementById("pdesc").value.trim()||"Beautiful design with quality finishing.\\nComfortable Fiber Cotton fabric.\\nModern and elegant design.\\nSuitable for everyday and festive wear.";
+ const files=[...document.getElementById("pfiles").files];
+ if(!files.length){alert("Please select at least one product photo.");return}
+ if(data.products.some(p=>p.id===id)){alert("This product number already exists.");return}
+ const images=await readUniqueFiles(files);
+ if(!images.length){alert("All selected photos are duplicates.");return}
+ data.products.push({id,name,price,description,images,likes:0});
+ save();renderProducts();
+ ["pid","pname","pdesc","pfiles"].forEach(x=>document.getElementById(x).value="");
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function renderProducts(){
+ const box=document.getElementById("products");
+ document.getElementById("stats").textContent=`${data.products.length} products • Up to 4 photos per product • Capacity supports 1000+ products`;
+ if(!data.products.length){box.innerHTML="<p>No products added yet.</p>";return}
+ box.innerHTML=data.products.map((p,i)=>`<div class="item">
+  <img class="preview" src="${(p.images||[])[0]||""}" alt="">
+  <strong>${esc(p.id)} — ${esc(p.name)}</strong>
+  <div>₹${Number(p.price||560).toLocaleString("en-IN")}</div>
+  <p>${esc(p.description||"")}</p>
+  <div class="thumbs">
+   ${(p.images||[]).map((x,j)=>`<div class="thumb"><img src="${x}" alt="View ${j+1}"><button title="Remove photo" onclick="removePhoto(${i},${j})">×</button></div>`).join("")}
+   ${((p.images||[]).length<4)?`<div class="addTile" onclick="addPhoto(${i})" title="Add another product photo">+</div>`:""}
+  </div>
+  <button class="gray" onclick="editProduct(${i})">Edit Details</button>
+  <button class="red" onclick="deleteProduct(${i})">Delete Product</button>
+ </div>`).join("");
+}
+function removePhoto(i,j){
+ if((data.products[i].images||[]).length<=1){alert("Keep at least one product photo.");return}
+ if(confirm("Remove this product photo?")){data.products[i].images.splice(j,1);save();renderProducts()}
+}
+function addPhoto(i){
+ const input=document.createElement("input");input.type="file";input.accept="image/*";input.multiple=true;
+ input.onchange=async()=>{const p=data.products[i];const slots=4-(p.images||[]).length;if(slots<=0)return;
+  const add=await readUniqueFiles([...input.files].slice(0,slots),[...p.images,...data.products.flatMap(x=>x.images||[])]);
+  p.images.push(...add);save();renderProducts();
+ };input.click();
+}
+async function editProduct(i){
+ const p=data.products[i];
+ const name=prompt("Product name:",p.name);if(name===null)return;
+ const price=prompt("Price:",p.price||560);if(price===null)return;
+ const desc=prompt("Four-line description:",p.description||"");if(desc===null)return;
+ p.name=name;p.price=Number(price)||560;p.description=desc;save();renderProducts();
+}
+function deleteProduct(i){if(confirm("Delete this product and all its photos?")){data.products.splice(i,1);save();renderProducts()}}
+function exportDataJs(){
+ const js="// Unlimited Store published data\\nwindow.STORE_DATA = "+JSON.stringify(data,null,2)+";\\n";
+ downloadBlob(new Blob([js],{type:"application/javascript"}),"data.js");
+}
+function exportBackup(){downloadBlob(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),"unlimited-store-backup.json")}
+function importBackup(){document.getElementById("backupFile").click()}
+document.getElementById("backupFile").addEventListener("change",e=>{
+ const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{data=JSON.parse(r.result);save();fill();renderProducts();alert("Backup imported.")}catch(err){alert("Invalid JSON backup.")}};
+ r.readAsText(f)
+});
+function downloadBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+</script>
+</body>
+</html>
