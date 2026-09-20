@@ -1,197 +1,757 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Unlimited Store Admin</title>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0"
+>
+
+<title>Fancy Dress Admin</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f6f8;font-family:Arial,sans-serif;color:#222}.wrap{max-width:1100px;margin:auto;padding:18px}
-.panel{background:#fff;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 2px 12px #0001}h1{margin-top:0}
-input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:9px;margin:6px 0 12px}textarea{min-height:100px;resize:vertical}
-button{border:0;border-radius:9px;padding:10px 13px;font-weight:700;cursor:pointer;margin:3px}.primary{background:#111827;color:#fff}.green{background:#25d366;color:#fff}.red{background:#ef4444;color:#fff}.gray{background:#e5e7eb}
-.hidden{display:none}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}.item{border:1px solid #e5e7eb;border-radius:12px;padding:12px;position:relative}.preview{width:100%;height:230px;object-fit:cover;border-radius:9px;background:#eee}
-.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}.thumb{position:relative}.thumb img{width:100%;height:62px;object-fit:cover;border-radius:7px}.thumb button{position:absolute;right:-2px;top:-2px;width:23px;height:23px;padding:0;border-radius:50%;background:#ef4444;color:#fff}.addTile{height:62px;border:2px dashed #bbb;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:25px;color:#777;cursor:pointer}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.note{font-size:13px;line-height:1.5;color:#666}.stats{font-weight:700;margin-bottom:10px}
-#login{max-width:420px;margin:50px auto}.small{font-size:12px;color:#777}
-@media(max-width:650px){.row{grid-template-columns:1fr}}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f3f3;
+  color:#222;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+
+.header{
+  background:#111;
+  color:white;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:18px;
+}
+
+.panel{
+  background:white;
+  padding:18px;
+  border-radius:15px;
+  margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+h1,h2{
+  margin-top:0;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:90px;
+}
+
+button{
+  padding:12px 16px;
+  border:0;
+  border-radius:9px;
+  background:#111;
+  color:white;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.add{
+  background:#087f23;
+}
+
+.delete{
+  background:#d22;
+}
+
+.product{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+.small{
+  color:#666;
+  font-size:13px;
+}
+
+.message{
+  padding:12px;
+  border-radius:9px;
+  margin-top:12px;
+  display:none;
+}
+
+.success{
+  background:#e5f7e8;
+  border:1px solid #9bd0a3;
+}
+
+.error{
+  background:#ffe5e5;
+  border:1px solid #d99;
+}
+
 </style>
+
 </head>
+
 <body>
-<div id="login" class="panel">
-<h1>Unlimited Store Admin</h1>
-<p class="note">This login is a client-side lock for a static GitHub Pages site. It is not equivalent to server-side authentication; do not treat credentials stored in a static HTML file as secret.</p>
-<input id="email" type="email" placeholder="Admin email">
-<input id="password" type="password" placeholder="Password">
-<button class="primary" onclick="login()">Login</button>
-<div id="loginMsg"></div>
+
+<div class="wrap">
+
+<div class="header">
+
+<h1>Fancy Dress Admin</h1>
+
+<p>
+Manage your store and products.
+</p>
+
 </div>
 
-<div id="app" class="wrap hidden">
-<h1>Unlimited Store — Admin Control</h1>
 
 <div class="panel">
+
 <h2>Store Settings</h2>
-<div class="row">
- <div><label>WhatsApp number</label><input id="wa"></div>
- <div><label>Default product price</label><input id="price" type="number"></div>
-</div>
-<label>Store bio</label><textarea id="bio"></textarea>
-<label>Cover photo</label><input id="coverFile" type="file" accept="image/*">
-<label>Profile photo</label><input id="profileFile" type="file" accept="image/*">
-<button class="green" onclick="saveSettings()">Save Settings</button>
+
+
+<label>Store Name</label>
+
+<input
+  id="brand"
+  value="Fancy Dress"
+>
+
+
+<label>Collection Title</label>
+
+<input
+  id="title"
+  value="Fancy Kurti Collection"
+>
+
+
+<label>Website Description</label>
+
+<textarea id="subtitle">Explore our latest Cotton Kurti designs and order your favorite style on WhatsApp.</textarea>
+
+
+<label>WhatsApp Number</label>
+
+<input
+  id="whatsapp"
+  value="919119392297"
+>
+
+
+<label>Cover Image URL</label>
+
+<input
+  id="cover"
+  value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png"
+>
+
+
+<label>Profile Image URL</label>
+
+<input
+  id="profile"
+  value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg"
+>
+
 </div>
 
-<div class="panel">
-<h2>Add Product</h2>
-<div class="row">
- <div><label>Product number</label><input id="pid" placeholder="US001"></div>
- <div><label>Product name</label><input id="pname" placeholder="Girls Kurti"></div>
-</div>
-<label>Price</label><input id="pprice" type="number" value="560">
-<label>Four-line design description</label>
-<textarea id="pdesc" placeholder="Elegant embroidery design.
-Comfortable Fiber Cotton fabric.
-Beautiful finishing and modern look.
-Suitable for everyday and festive wear."></textarea>
-<label>Product photos (up to 4)</label>
-<input id="pfiles" type="file" accept="image/*" multiple>
-<button class="green" onclick="addProduct()">Add Product</button>
-<p class="note">The system rejects duplicate image files and duplicate product numbers.</p>
-</div>
 
 <div class="panel">
+
 <h2>Products</h2>
-<div id="stats" class="stats"></div>
-<div id="products" class="grid"></div>
+
+<div id="products"></div>
+
+<button
+  class="add"
+  onclick="addProduct()"
+>
++ Add New Product
+</button>
+
 </div>
 
+
 <div class="panel">
-<h2>Publish to GitHub</h2>
-<p class="note">GitHub Pages is static. Admin changes are saved in this browser first. Use <b>Download updated data.js</b>, then replace data.js in your GitHub repository. If you change product images, the images themselves must also be available in the published repository or as public image URLs.</p>
-<button class="primary" onclick="exportDataJs()">Download updated data.js</button>
-<button class="gray" onclick="exportBackup()">Download JSON backup</button>
-<button class="gray" onclick="importBackup()">Import JSON backup</button>
-<input id="backupFile" type="file" accept=".json" style="display:none">
-<button class="red" onclick="logout()">Logout</button>
+
+<h2>Save</h2>
+
+<p>
+After making changes, download the new
+<b>data.js</b> and replace the old
+<b>data.js</b> file in GitHub.
+</p>
+
+<button onclick="downloadData()">
+Download data.js
+</button>
+
+<div
+  id="success"
+  class="message success">
 </div>
+
+<div
+  id="error"
+  class="message error">
 </div>
+
+</div>
+
+</div>
+
 
 <script>
-const ADMIN_EMAIL="kurticollection701@gmail.com";
-const ADMIN_PASSWORD="pooja@@2";
 
-const DEFAULT={
- settings:{
-  storeName:"Unlimited Store",whatsapp:"9119392297",price:560,fiber:"Fiber Cotton",sizeText:"All size available ✅",
-  bio:"All types of kurtis and kids clothing are available here at the best quality and best price.\\n10-day return policy is available. If there is any issue or problem with the dress, you can also request an exchange.\\nWhatsApp: 9119392297\\nUnlimited Store",
-  coverPhoto:"",profilePhoto:""
- },products:[]
+let data = {
+
+  brand:"Fancy Dress",
+
+  title:"Fancy Kurti Collection",
+
+  subtitle:
+    "Explore our latest Cotton Kurti designs and order your favorite style on WhatsApp.",
+
+  whatsapp:"919119392297",
+
+  cover:
+    "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png",
+
+  profile:
+    "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg",
+
+  products:[]
+
 };
 
-let data=load();
-function clone(x){return JSON.parse(JSON.stringify(x))}
-function load(){try{return JSON.parse(localStorage.getItem("unlimited_store_data"))||clone(DEFAULT)}catch(e){return clone(DEFAULT)}}
-function save(){localStorage.setItem("unlimited_store_data",JSON.stringify(data))}
-function login(){
- if(document.getElementById("email").value===ADMIN_EMAIL&&document.getElementById("password").value===ADMIN_PASSWORD){
-  sessionStorage.setItem("unlimited_store_auth","1");showApp();
- }else document.getElementById("loginMsg").textContent="Invalid login details.";
-}
-function showApp(){document.getElementById("login").classList.add("hidden");document.getElementById("app").classList.remove("hidden");fill();renderProducts()}
-function logout(){sessionStorage.removeItem("unlimited_store_auth");location.reload()}
-if(sessionStorage.getItem("unlimited_store_auth")==="1")showApp();
 
-function fill(){
- document.getElementById("wa").value=data.settings.whatsapp||"9119392297";
- document.getElementById("price").value=data.settings.price||560;
- document.getElementById("bio").value=data.settings.bio||"";
+function loadData(){
+
+  if(
+    window.STORE_DATA
+  ){
+
+    const old =
+      window.STORE_DATA;
+
+    data.brand =
+      old.brand || data.brand;
+
+    data.title =
+      old.title || data.title;
+
+    data.subtitle =
+      old.subtitle || data.subtitle;
+
+    data.whatsapp =
+      old.whatsapp || data.whatsapp;
+
+    data.cover =
+      old.coverImage || data.cover;
+
+    data.profile =
+      old.profileImage || data.profile;
+
+    data.products =
+      Array.isArray(old.products)
+        ? JSON.parse(
+            JSON.stringify(old.products)
+          )
+        : [];
+
+  }
+
+
+  document.getElementById("brand").value =
+    data.brand;
+
+  document.getElementById("title").value =
+    data.title;
+
+  document.getElementById("subtitle").value =
+    data.subtitle;
+
+  document.getElementById("whatsapp").value =
+    data.whatsapp;
+
+  document.getElementById("cover").value =
+    data.cover;
+
+  document.getElementById("profile").value =
+    data.profile;
+
+  render();
+
 }
-function fileData(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
-function duplicateImage(img){
- return data.products.some(p=>(p.images||[]).includes(img));
+
+
+function render(){
+
+  const box =
+    document.getElementById("products");
+
+  box.innerHTML="";
+
+
+  data.products.forEach(
+    function(product,index){
+
+      if(!Array.isArray(product.images)){
+
+        product.images =
+          product.image
+            ? [product.image]
+            : [];
+
+      }
+
+
+      while(product.images.length < 5){
+        product.images.push("");
+      }
+
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "product";
+
+
+      div.innerHTML = `
+
+<h3>
+${escapeHTML(
+  product.name ||
+  "Fancy Kurti Design " +
+  String(index+1).padStart(2,"0")
+)}
+</h3>
+
+<label>Product Name</label>
+
+<input
+value="${escapeAttr(
+  product.name ||
+  "Fancy Kurti Design " +
+  String(index+1).padStart(2,"0")
+)}"
+oninput="changeProduct(${index},'name',this.value)"
+>
+
+
+<label>Price</label>
+
+<input
+value="${escapeAttr(
+  product.price || "560"
+)}"
+oninput="changeProduct(${index},'price',this.value)"
+>
+
+
+<label>Fabric</label>
+
+<input
+value="${escapeAttr(
+  product.fabric || "Cotton"
+)}"
+oninput="changeProduct(${index},'fabric',this.value)"
+>
+
+
+<label>Description</label>
+
+<textarea
+oninput="changeProduct(${index},'description',this.value)"
+>${escapeHTML(
+  product.description || ""
+)}</textarea>
+
+
+<label>Image 1</label>
+
+<input
+value="${escapeAttr(
+  product.images[0] || ""
+)}"
+oninput="changeImage(${index},0,this.value)"
+>
+
+
+<label>Image 2</label>
+
+<input
+value="${escapeAttr(
+  product.images[1] || ""
+)}"
+oninput="changeImage(${index},1,this.value)"
+>
+
+
+<label>Image 3</label>
+
+<input
+value="${escapeAttr(
+  product.images[2] || ""
+)}"
+oninput="changeImage(${index},2,this.value)"
+>
+
+
+<label>Image 4</label>
+
+<input
+value="${escapeAttr(
+  product.images[3] || ""
+)}"
+oninput="changeImage(${index},3,this.value)"
+>
+
+
+<label>Image 5</label>
+
+<input
+value="${escapeAttr(
+  product.images[4] || ""
+)}"
+oninput="changeImage(${index},4,this.value)"
+>
+
+
+<button
+class="delete"
+onclick="deleteProduct(${index})"
+>
+Delete Product
+</button>
+
+`;
+
+      box.appendChild(div);
+
+    }
+  );
+
 }
-async function saveSettings(){
- data.settings.whatsapp=document.getElementById("wa").value.trim().replace(/\D/g,"");
- data.settings.price=Number(document.getElementById("price").value)||560;
- data.settings.bio=document.getElementById("bio").value;
- const cf=document.getElementById("coverFile").files[0],pf=document.getElementById("profileFile").files[0];
- if(cf)data.settings.coverPhoto=await fileData(cf);
- if(pf)data.settings.profilePhoto=await fileData(pf);
- save();alert("Settings saved. Download data.js to publish them on GitHub.");
+
+
+function changeProduct(
+  index,
+  field,
+  value
+){
+
+  data.products[index][field] =
+    value;
+
 }
-async function readUniqueFiles(fileList, existing=[]){
- const out=[],seen=new Set(existing);
- for(const f of [...fileList]){
-  if(out.length>=4)break;
-  const img=await fileData(f);
-  if(seen.has(img))continue;
-  seen.add(img);out.push(img);
- }
- return out;
+
+
+function changeImage(
+  index,
+  imageIndex,
+  value
+){
+
+  if(
+    !Array.isArray(
+      data.products[index].images
+    )
+  ){
+    data.products[index].images=[];
+  }
+
+  data.products[index].images[imageIndex] =
+    value;
+
+  data.products[index].image =
+    data.products[index].images[0];
+
 }
-async function addProduct(){
- const id=document.getElementById("pid").value.trim()||("US"+String(Date.now()).slice(-6));
- const name=document.getElementById("pname").value.trim()||"Product";
- const price=Number(document.getElementById("pprice").value)||560;
- const description=document.getElementById("pdesc").value.trim()||"Beautiful design with quality finishing.\\nComfortable Fiber Cotton fabric.\\nModern and elegant design.\\nSuitable for everyday and festive wear.";
- const files=[...document.getElementById("pfiles").files];
- if(!files.length){alert("Please select at least one product photo.");return}
- if(data.products.some(p=>p.id===id)){alert("This product number already exists.");return}
- const images=await readUniqueFiles(files);
- if(!images.length){alert("All selected photos are duplicates.");return}
- data.products.push({id,name,price,description,images,likes:0});
- save();renderProducts();
- ["pid","pname","pdesc","pfiles"].forEach(x=>document.getElementById(x).value="");
+
+
+function addProduct(){
+
+  const number =
+    data.products.length + 1;
+
+
+  data.products.push({
+
+    name:
+      "Fancy Kurti Design " +
+      String(number).padStart(2,"0"),
+
+    price:"560",
+
+    fabric:"Cotton",
+
+    images:[""],
+
+    description:
+      "Beautiful Cotton Kurti with an elegant design and comfortable fit. Perfect for everyday wear and special occasions."
+
+  });
+
+
+  render();
+
 }
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function renderProducts(){
- const box=document.getElementById("products");
- document.getElementById("stats").textContent=`${data.products.length} products • Up to 4 photos per product • Capacity supports 1000+ products`;
- if(!data.products.length){box.innerHTML="<p>No products added yet.</p>";return}
- box.innerHTML=data.products.map((p,i)=>`<div class="item">
-  <img class="preview" src="${(p.images||[])[0]||""}" alt="">
-  <strong>${esc(p.id)} — ${esc(p.name)}</strong>
-  <div>₹${Number(p.price||560).toLocaleString("en-IN")}</div>
-  <p>${esc(p.description||"")}</p>
-  <div class="thumbs">
-   ${(p.images||[]).map((x,j)=>`<div class="thumb"><img src="${x}" alt="View ${j+1}"><button title="Remove photo" onclick="removePhoto(${i},${j})">×</button></div>`).join("")}
-   ${((p.images||[]).length<4)?`<div class="addTile" onclick="addPhoto(${i})" title="Add another product photo">+</div>`:""}
-  </div>
-  <button class="gray" onclick="editProduct(${i})">Edit Details</button>
-  <button class="red" onclick="deleteProduct(${i})">Delete Product</button>
- </div>`).join("");
+
+
+function deleteProduct(index){
+
+  if(
+    confirm(
+      "Delete this product?"
+    )
+  ){
+
+    data.products.splice(
+      index,
+      1
+    );
+
+    render();
+
+  }
+
 }
-function removePhoto(i,j){
- if((data.products[i].images||[]).length<=1){alert("Keep at least one product photo.");return}
- if(confirm("Remove this product photo?")){data.products[i].images.splice(j,1);save();renderProducts()}
+
+
+function downloadData(){
+
+  try{
+
+    data.brand =
+      document.getElementById("brand").value.trim();
+
+    data.title =
+      document.getElementById("title").value.trim();
+
+    data.subtitle =
+      document.getElementById("subtitle").value.trim();
+
+    data.whatsapp =
+      document
+        .getElementById("whatsapp")
+        .value
+        .replace(/\D/g,"");
+
+    data.cover =
+      document.getElementById("cover").value.trim();
+
+    data.profile =
+      document.getElementById("profile").value.trim();
+
+
+    const finalData = {
+
+      brand:data.brand,
+
+      title:data.title,
+
+      subtitle:data.subtitle,
+
+      whatsapp:data.whatsapp,
+
+      coverImage:data.cover,
+
+      profileImage:data.profile,
+
+      products:data.products.map(
+        function(product){
+
+          return {
+
+            name:
+              product.name ||
+              "Fancy Kurti Design",
+
+            price:
+              product.price || "560",
+
+            fabric:
+              product.fabric || "Cotton",
+
+            images:
+              (product.images || [])
+                .filter(Boolean),
+
+            description:
+              product.description || ""
+
+          };
+
+        }
+      )
+
+    };
+
+
+    const code =
+      "window.STORE_DATA = " +
+      JSON.stringify(
+        finalData,
+        null,
+        2
+      ) +
+      ";";
+
+
+    const blob =
+      new Blob(
+        [code],
+        {
+          type:
+            "application/javascript"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
+    link.href=url;
+
+    link.download="data.js";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    showSuccess(
+      "data.js downloaded successfully."
+    );
+
+  }catch(error){
+
+    showError(
+      "Could not create data.js: " +
+      error.message
+    );
+
+  }
+
 }
-function addPhoto(i){
- const input=document.createElement("input");input.type="file";input.accept="image/*";input.multiple=true;
- input.onchange=async()=>{const p=data.products[i];const slots=4-(p.images||[]).length;if(slots<=0)return;
-  const add=await readUniqueFiles([...input.files].slice(0,slots),[...p.images,...data.products.flatMap(x=>x.images||[])]);
-  p.images.push(...add);save();renderProducts();
- };input.click();
+
+
+function escapeHTML(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
 }
-async function editProduct(i){
- const p=data.products[i];
- const name=prompt("Product name:",p.name);if(name===null)return;
- const price=prompt("Price:",p.price||560);if(price===null)return;
- const desc=prompt("Four-line description:",p.description||"");if(desc===null)return;
- p.name=name;p.price=Number(price)||560;p.description=desc;save();renderProducts();
+
+
+function escapeAttr(value){
+
+  return escapeHTML(value);
+
 }
-function deleteProduct(i){if(confirm("Delete this product and all its photos?")){data.products.splice(i,1);save();renderProducts()}}
-function exportDataJs(){
- const js="// Unlimited Store published data\\nwindow.STORE_DATA = "+JSON.stringify(data,null,2)+";\\n";
- downloadBlob(new Blob([js],{type:"application/javascript"}),"data.js");
+
+
+function showSuccess(message){
+
+  const box =
+    document.getElementById("success");
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
 }
-function exportBackup(){downloadBlob(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),"unlimited-store-backup.json")}
-function importBackup(){document.getElementById("backupFile").click()}
-document.getElementById("backupFile").addEventListener("change",e=>{
- const f=e.target.files[0];if(!f)return;const r=new FileReader();
- r.onload=()=>{try{data=JSON.parse(r.result);save();fill();renderProducts();alert("Backup imported.")}catch(err){alert("Invalid JSON backup.")}};
- r.readAsText(f)
-});
-function downloadBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+
+function showError(message){
+
+  const box =
+    document.getElementById("error");
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
+}
+
+
+const script =
+  document.createElement("script");
+
+script.src =
+  "data.js?v=" +
+  Date.now();
+
+script.onload =
+  function(){
+
+    loadData();
+
+  };
+
+script.onerror =
+  function(){
+
+    showError(
+      "data.js could not be loaded."
+    );
+
+    render();
+
+  };
+
+document.body.appendChild(script);
+
 </script>
+
 </body>
-</html>
+ </html>
