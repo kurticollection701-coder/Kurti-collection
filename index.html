@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Fancy Dress</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -19,6 +25,7 @@ body{
 }
 
 /* COVER */
+
 .cover{
   width:100%;
   height:280px;
@@ -26,6 +33,7 @@ body{
 }
 
 /* PROFILE */
+
 .profile-area{
   background:#fff;
   text-align:center;
@@ -56,6 +64,7 @@ body{
 }
 
 /* COLLECTION */
+
 .collection{
   max-width:1200px;
   margin:auto;
@@ -75,9 +84,11 @@ body{
 }
 
 /* PRODUCTS */
+
 .posts{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
   gap:20px;
 }
 
@@ -92,6 +103,7 @@ body{
   position:relative;
   height:360px;
   background:#eee;
+  overflow:hidden;
 }
 
 .gallery img{
@@ -101,7 +113,7 @@ body{
   cursor:zoom-in;
 }
 
-.arrow{
+.gallery-button{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
@@ -111,15 +123,16 @@ body{
   border-radius:50%;
   background:rgba(0,0,0,.65);
   color:#fff;
-  font-size:25px;
+  font-size:28px;
+  cursor:pointer;
   z-index:2;
 }
 
-.arrow.left{
+.gallery-button.prev{
   left:10px;
 }
 
-.arrow.right{
+.gallery-button.next{
   right:10px;
 }
 
@@ -132,6 +145,7 @@ body{
   background:rgba(0,0,0,.65);
   color:#fff;
   font-size:13px;
+  z-index:2;
 }
 
 .product-info{
@@ -157,6 +171,7 @@ body{
 .description{
   color:#666;
   line-height:1.5;
+  min-height:45px;
 }
 
 .order-btn{
@@ -172,7 +187,8 @@ body{
   font-weight:bold;
 }
 
-/* VIEWER */
+/* FULLSCREEN VIEWER */
+
 .viewer{
   display:none;
   position:fixed;
@@ -188,23 +204,25 @@ body{
 }
 
 .viewer-image{
-  max-width:90%;
-  max-height:82%;
+  max-width:88%;
+  max-height:78%;
   object-fit:contain;
   transition:transform .2s ease;
 }
 
 .close-viewer{
   position:absolute;
-  top:15px;
-  right:20px;
+  top:12px;
+  right:18px;
   border:0;
   background:none;
   color:#fff;
-  font-size:38px;
+  font-size:40px;
+  cursor:pointer;
+  z-index:5;
 }
 
-.viewer-arrow{
+.viewer-button{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
@@ -214,14 +232,16 @@ body{
   border-radius:50%;
   background:rgba(255,255,255,.2);
   color:#fff;
-  font-size:28px;
+  font-size:30px;
+  cursor:pointer;
+  z-index:5;
 }
 
-.viewer-left{
+.viewer-prev{
   left:15px;
 }
 
-.viewer-right{
+.viewer-next{
   right:15px;
 }
 
@@ -232,17 +252,20 @@ body{
   transform:translateX(-50%);
   display:flex;
   gap:8px;
+  z-index:5;
 }
 
 .zoom-controls button{
-  height:42px;
   min-width:48px;
+  height:42px;
   border:0;
   border-radius:8px;
   font-size:18px;
+  cursor:pointer;
 }
 
 /* MOBILE */
+
 @media(max-width:600px){
 
   .cover{
@@ -266,20 +289,32 @@ body{
   .gallery{
     height:330px;
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<section class="cover" id="cover"></section>
+<!-- COVER -->
+
+<section
+  class="cover"
+  id="cover">
+</section>
+
+
+<!-- PROFILE -->
 
 <section class="profile-area">
 
 <img
   id="profilePhoto"
   class="profile-photo"
-  alt="Fancy Dress">
+  alt="Fancy Dress"
+>
 
 <h1
   id="storeName"
@@ -288,19 +323,26 @@ body{
 </h1>
 
 <p class="store-intro">
-Stylish Cotton Kurtis • Beautiful Designs • Easy WhatsApp Ordering
+  Stylish Cotton Kurtis • Beautiful Designs • Easy WhatsApp Ordering
 </p>
 
 </section>
 
+
+<!-- COLLECTION -->
+
 <section class="collection">
 
-<h2 class="collection-title">
-Fancy Kurti Collection
+<h2
+  id="collectionTitle"
+  class="collection-title">
+  Fancy Kurti Collection
 </h2>
 
-<p class="collection-subtitle">
-Explore our latest designs and order your favorite style on WhatsApp.
+<p
+  id="collectionSubtitle"
+  class="collection-subtitle">
+  Explore our latest designs and order your favorite style on WhatsApp.
 </p>
 
 <div
@@ -310,6 +352,9 @@ Explore our latest designs and order your favorite style on WhatsApp.
 
 </section>
 
+
+<!-- FULLSCREEN VIEWER -->
+
 <div
   id="viewer"
   class="viewer">
@@ -317,298 +362,357 @@ Explore our latest designs and order your favorite style on WhatsApp.
 <button
   class="close-viewer"
   onclick="closeViewer()">
-×
+  ×
 </button>
 
 <button
-  class="viewer-arrow viewer-left"
-  onclick="viewerPrevious()">
-‹
+  class="viewer-button viewer-prev"
+  onclick="viewerPrevious(event)">
+  ‹
 </button>
 
 <img
   id="viewerImage"
   class="viewer-image"
-  alt="Product Image">
+  alt="Product Image"
+>
 
 <button
-  class="viewer-arrow viewer-right"
-  onclick="viewerNext()">
-›
+  class="viewer-button viewer-next"
+  onclick="viewerNext(event)">
+  ›
 </button>
 
 <div class="zoom-controls">
 
-<button onclick="zoomOut()">−</button>
+<button onclick="zoomOut(event)">
+  −
+</button>
 
-<button onclick="resetZoom()">Reset</button>
+<button onclick="resetZoom(event)">
+  Reset
+</button>
 
-<button onclick="zoomIn()">+</button>
+<button onclick="zoomIn(event)">
+  +
+</button>
 
 </div>
 
 </div>
 
-<script src="data.js"></script>
+
+<!-- DATA -->
+
+<script src="data.js?v=20260920"></script>
+
 
 <script>
 
-/* IMAGE URL */
+/* STORE */
 
-const RAW_BASE =
-"https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/";
+document.getElementById("storeName").textContent =
+  STORE_DATA.brand;
 
-function imageURL(image){
+document.getElementById("collectionTitle").textContent =
+  STORE_DATA.title;
 
-  if(!image){
-    return "";
-  }
-
-  if(
-    image.startsWith("http://") ||
-    image.startsWith("https://")
-  ){
-    return image;
-  }
-
-  return RAW_BASE + image;
-}
+document.getElementById("collectionSubtitle").textContent =
+  STORE_DATA.subtitle;
 
 
-/* STORE INFORMATION */
+/* COVER */
 
-if(typeof STORE_DATA !== "undefined"){
+document.getElementById("cover").style.backgroundImage =
+  "url('" + STORE_DATA.coverImage + "')";
 
-  if(STORE_DATA.coverImage){
-    document.getElementById("cover").style.backgroundImage =
-      "url('" + imageURL(STORE_DATA.coverImage) + "')";
-  }
 
-  if(STORE_DATA.profileImage){
-    document.getElementById("profilePhoto").src =
-      imageURL(STORE_DATA.profileImage);
-  }
+/* PROFILE */
 
-  if(STORE_DATA.brand){
-    document.getElementById("storeName").textContent =
-      STORE_DATA.brand;
-  }
-
-}
+document.getElementById("profilePhoto").src =
+  STORE_DATA.profileImage;
 
 
 /* PRODUCTS */
 
 const posts =
-document.getElementById("posts");
+  document.getElementById("posts");
 
 const products =
-(typeof STORE_DATA !== "undefined" &&
- Array.isArray(STORE_DATA.products))
- ? STORE_DATA.products
- : [];
+  Array.isArray(STORE_DATA.products)
+    ? STORE_DATA.products
+    : [];
 
 
 let viewerImages = [];
+
 let viewerIndex = 0;
+
 let zoomLevel = 1;
 
 
+/* CREATE PRODUCTS */
+
 products.forEach(function(product,index){
 
-  let images = [];
-
-  if(Array.isArray(product.images)){
-    images = product.images;
-  }
-  else if(product.image){
-    images = [product.image];
-  }
-
-  if(images.length === 0){
+  if(
+    !Array.isArray(product.images) ||
+    product.images.length === 0
+  ){
     return;
   }
 
 
   const post =
-  document.createElement("div");
+    document.createElement("article");
 
   post.className = "post";
 
 
+  /* GALLERY */
+
   const gallery =
-  document.createElement("div");
+    document.createElement("div");
 
   gallery.className = "gallery";
 
 
   const image =
-  document.createElement("img");
+    document.createElement("img");
 
   image.src =
-    imageURL(images[0]);
+    product.images[0];
 
   image.alt =
     product.name ||
-    "Fancy Kurti Design " + (index + 1);
+    "Fancy Kurti Design " +
+    String(index + 1).padStart(2,"0");
 
+
+  let currentImage = 0;
+
+
+  /* IMAGE CLICK */
 
   image.onclick =
     function(){
-      openViewer(images,0);
+
+      openViewer(
+        product.images,
+        currentImage
+      );
+
     };
 
 
   gallery.appendChild(image);
 
 
-  if(images.length > 1){
+  /* MULTIPLE IMAGES */
 
-    const left =
-    document.createElement("button");
-
-    left.className =
-      "arrow left";
-
-    left.textContent = "‹";
-
-    left.onclick =
-      function(){
-        changeGalleryImage(
-          image,
-          images,
-          -1
-        );
-      };
-
-
-    const right =
-    document.createElement("button");
-
-    right.className =
-      "arrow right";
-
-    right.textContent = "›";
-
-    right.onclick =
-      function(){
-        changeGalleryImage(
-          image,
-          images,
-          1
-        );
-      };
-
+  if(product.images.length > 1){
 
     const count =
-    document.createElement("div");
+      document.createElement("div");
 
     count.className =
       "photo-count";
 
     count.textContent =
-      "1 / " + images.length;
+      "1 / " +
+      product.images.length;
 
 
-    gallery.appendChild(left);
-    gallery.appendChild(right);
+    const previous =
+      document.createElement("button");
+
+    previous.className =
+      "gallery-button prev";
+
+    previous.textContent =
+      "‹";
+
+
+    const next =
+      document.createElement("button");
+
+    next.className =
+      "gallery-button next";
+
+    next.textContent =
+      "›";
+
+
+    previous.onclick =
+      function(event){
+
+        event.stopPropagation();
+
+        currentImage--;
+
+        if(currentImage < 0){
+          currentImage =
+            product.images.length - 1;
+        }
+
+        image.src =
+          product.images[currentImage];
+
+        count.textContent =
+          (currentImage + 1) +
+          " / " +
+          product.images.length;
+
+      };
+
+
+    next.onclick =
+      function(event){
+
+        event.stopPropagation();
+
+        currentImage++;
+
+        if(
+          currentImage >=
+          product.images.length
+        ){
+          currentImage = 0;
+        }
+
+        image.src =
+          product.images[currentImage];
+
+        count.textContent =
+          (currentImage + 1) +
+          " / " +
+          product.images.length;
+
+      };
+
+
+    gallery.appendChild(previous);
+
+    gallery.appendChild(next);
+
     gallery.appendChild(count);
-
-
-    image.dataset.photoIndex = "0";
 
   }
 
 
+  /* PRODUCT INFORMATION */
+
   const info =
-  document.createElement("div");
+    document.createElement("div");
 
   info.className =
     "product-info";
 
 
   const name =
-  document.createElement("h3");
-
-  name.className =
-    "product-name";
-
-  name.textContent =
     product.name ||
-    "Fancy Kurti Design " + String(index + 1).padStart(2,"0");
+    "Fancy Kurti Design " +
+    String(index + 1).padStart(2,"0");
 
 
   const price =
-  document.createElement("div");
-
-  price.className =
-    "price";
-
-  price.textContent =
-    "₹560";
+    product.price || "560";
 
 
   const fabric =
-  document.createElement("div");
-
-  fabric.className =
-    "fabric";
-
-  fabric.textContent =
-    "Fabric: Cotton";
+    product.fabric || "Cotton";
 
 
   const description =
-  document.createElement("div");
+    product.description ||
+    "Beautiful Cotton Kurti with an elegant design and comfortable fit. Perfect for everyday wear and special occasions.";
 
-  description.className =
+
+  const nameElement =
+    document.createElement("h3");
+
+  nameElement.className =
+    "product-name";
+
+  nameElement.textContent =
+    name;
+
+
+  const priceElement =
+    document.createElement("div");
+
+  priceElement.className =
+    "price";
+
+  priceElement.textContent =
+    "₹" + price;
+
+
+  const fabricElement =
+    document.createElement("div");
+
+  fabricElement.className =
+    "fabric";
+
+  fabricElement.textContent =
+    "Fabric: " + fabric;
+
+
+  const descriptionElement =
+    document.createElement("div");
+
+  descriptionElement.className =
     "description";
 
-  description.textContent =
-    product.description ||
-    "Beautiful cotton kurti with an elegant design and comfortable fit. Perfect for everyday wear and special occasions.";
+  descriptionElement.textContent =
+    description;
 
 
-  const button =
-  document.createElement("a");
+  /* WHATSAPP */
 
-  button.className =
+  const orderButton =
+    document.createElement("a");
+
+  orderButton.className =
     "order-btn";
 
-  const whatsapp =
-    (typeof STORE_DATA !== "undefined" &&
-     STORE_DATA.whatsapp)
-    ? STORE_DATA.whatsapp
-    : "919119392297";
-
+  orderButton.target =
+    "_blank";
 
   const message =
     "Hello, I want to order " +
-    (name.textContent) +
-    ". Price: ₹560. Fabric: Cotton.";
+    name +
+    ". Price: ₹" +
+    price +
+    ". Fabric: " +
+    fabric +
+    ".";
 
 
-  button.href =
+  orderButton.href =
     "https://wa.me/" +
-    whatsapp +
+    STORE_DATA.whatsapp +
     "?text=" +
     encodeURIComponent(message);
 
-  button.target =
-    "_blank";
 
-  button.textContent =
+  orderButton.textContent =
     "Order on WhatsApp";
 
 
-  info.appendChild(name);
-  info.appendChild(price);
-  info.appendChild(fabric);
-  info.appendChild(description);
-  info.appendChild(button);
+  info.appendChild(nameElement);
+
+  info.appendChild(priceElement);
+
+  info.appendChild(fabricElement);
+
+  info.appendChild(descriptionElement);
+
+  info.appendChild(orderButton);
 
 
   post.appendChild(gallery);
+
   post.appendChild(info);
 
   posts.appendChild(post);
@@ -616,52 +720,16 @@ products.forEach(function(product,index){
 });
 
 
-/* GALLERY */
-
-function changeGalleryImage(
-  image,
-  images,
-  direction
-){
-
-  let current =
-    parseInt(image.dataset.photoIndex || "0");
-
-  current += direction;
-
-  if(current < 0){
-    current = images.length - 1;
-  }
-
-  if(current >= images.length){
-    current = 0;
-  }
-
-  image.src =
-    imageURL(images[current]);
-
-  image.dataset.photoIndex =
-    current;
-
-  const count =
-    image.parentElement.querySelector(".photo-count");
-
-  if(count){
-    count.textContent =
-      (current + 1) +
-      " / " +
-      images.length;
-  }
-
-}
-
-
 /* VIEWER */
 
-function openViewer(
-  images,
-  index
-){
+const viewer =
+  document.getElementById("viewer");
+
+const viewerImage =
+  document.getElementById("viewerImage");
+
+
+function openViewer(images,index){
 
   viewerImages =
     images;
@@ -672,31 +740,33 @@ function openViewer(
   zoomLevel =
     1;
 
-  document
-    .getElementById("viewer")
-    .classList.add("active");
-
   showViewerImage();
+
+  viewer.classList.add("active");
 
 }
 
 
 function showViewerImage(){
 
-  const viewerImage =
-    document.getElementById("viewerImage");
+  if(viewerImages.length === 0){
+    return;
+  }
 
   viewerImage.src =
-    imageURL(
-      viewerImages[viewerIndex]
-    );
+    viewerImages[viewerIndex];
 
   viewerImage.style.transform =
     "scale(" + zoomLevel + ")";
+
 }
 
 
-function viewerPrevious(){
+/* PREVIOUS */
+
+function viewerPrevious(event){
+
+  event.stopPropagation();
 
   if(viewerImages.length === 0){
     return;
@@ -712,10 +782,15 @@ function viewerPrevious(){
   zoomLevel = 1;
 
   showViewerImage();
+
 }
 
 
-function viewerNext(){
+/* NEXT */
+
+function viewerNext(event){
+
+  event.stopPropagation();
 
   if(viewerImages.length === 0){
     return;
@@ -723,26 +798,39 @@ function viewerNext(){
 
   viewerIndex++;
 
-  if(viewerIndex >= viewerImages.length){
+  if(
+    viewerIndex >=
+    viewerImages.length
+  ){
     viewerIndex = 0;
   }
 
   zoomLevel = 1;
 
   showViewerImage();
+
 }
 
+
+/* CLOSE */
 
 function closeViewer(){
 
-  document
-    .getElementById("viewer")
-    .classList.remove("active");
+  viewer.classList.remove("active");
+
+  zoomLevel = 1;
+
+  viewerImage.style.transform =
+    "scale(1)";
 
 }
 
 
-function zoomIn(){
+/* ZOOM IN */
+
+function zoomIn(event){
+
+  event.stopPropagation();
 
   zoomLevel += .25;
 
@@ -755,7 +843,11 @@ function zoomIn(){
 }
 
 
-function zoomOut(){
+/* ZOOM OUT */
+
+function zoomOut(event){
+
+  event.stopPropagation();
 
   zoomLevel -= .25;
 
@@ -768,7 +860,11 @@ function zoomOut(){
 }
 
 
-function resetZoom(){
+/* RESET */
+
+function resetZoom(event){
+
+  event.stopPropagation();
 
   zoomLevel = 1;
 
@@ -777,22 +873,20 @@ function resetZoom(){
 }
 
 
-/* CLOSE VIEWER BY CLICKING BACKGROUND */
+/* CLOSE BY BACKGROUND */
 
-document
-  .getElementById("viewer")
-  .addEventListener(
-    "click",
-    function(event){
+viewer.addEventListener(
+  "click",
+  function(event){
 
-      if(event.target === this){
-        closeViewer();
-      }
-
+    if(event.target === viewer){
+      closeViewer();
     }
-  );
+
+  }
+);
 
 </script>
 
 </body>
-</html>
+  </html>
