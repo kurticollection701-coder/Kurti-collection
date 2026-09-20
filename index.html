@@ -29,7 +29,7 @@ body{
 .profile-area{
   background:#fff;
   text-align:center;
-  padding:0 20px 25px;
+  padding:0 15px 25px;
 }
 
 .profile-photo{
@@ -37,42 +37,41 @@ body{
   height:125px;
   border-radius:50%;
   object-fit:cover;
-  border:5px solid white;
+  border:5px solid #fff;
   margin-top:-62px;
-  background:white;
+  background:#eee;
   box-shadow:0 3px 15px rgba(0,0,0,.2);
 }
 
 .store-name{
-  margin:10px 0 5px;
+  margin:10px 0 6px;
   font-size:28px;
-  font-weight:bold;
 }
 
 .store-intro{
   margin:0 auto;
-  max-width:650px;
   color:#666;
+  max-width:700px;
   line-height:1.5;
 }
 
 /* COLLECTION */
 .collection{
-  max-width:1250px;
+  max-width:1200px;
   margin:auto;
   padding:30px 15px;
 }
 
 .collection-title{
   text-align:center;
-  font-size:28px;
   margin:0 0 8px;
+  font-size:28px;
 }
 
 .collection-subtitle{
   text-align:center;
   color:#666;
-  margin-bottom:25px;
+  margin:0 0 25px;
 }
 
 /* PRODUCTS */
@@ -83,18 +82,16 @@ body{
 }
 
 .post{
-  background:white;
-  border-radius:16px;
+  background:#fff;
+  border-radius:15px;
   overflow:hidden;
-  box-shadow:0 3px 15px rgba(0,0,0,.10);
+  box-shadow:0 3px 15px rgba(0,0,0,.12);
 }
 
 .gallery{
   position:relative;
-  width:100%;
-  height:350px;
+  height:360px;
   background:#eee;
-  overflow:hidden;
 }
 
 .gallery img{
@@ -104,43 +101,44 @@ body{
   cursor:zoom-in;
 }
 
-.gallery-button{
+.arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   border:0;
   border-radius:50%;
-  background:rgba(0,0,0,.6);
-  color:white;
+  background:rgba(0,0,0,.65);
+  color:#fff;
   font-size:25px;
+  z-index:2;
 }
 
-.gallery-button.prev{
+.arrow.left{
   left:10px;
 }
 
-.gallery-button.next{
+.arrow.right{
   right:10px;
 }
 
 .photo-count{
   position:absolute;
-  right:10px;
   top:10px;
-  background:rgba(0,0,0,.65);
-  color:white;
+  right:10px;
   padding:6px 10px;
   border-radius:20px;
+  background:rgba(0,0,0,.65);
+  color:#fff;
   font-size:13px;
 }
 
-.post-info{
+.product-info{
   padding:18px;
 }
 
-.post-info h3{
+.product-name{
   margin:0 0 8px;
   font-size:20px;
 }
@@ -152,7 +150,6 @@ body{
 }
 
 .fabric{
-  font-size:14px;
   color:#555;
   margin-bottom:10px;
 }
@@ -160,7 +157,6 @@ body{
 .description{
   color:#666;
   line-height:1.5;
-  min-height:45px;
 }
 
 .order-btn{
@@ -168,23 +164,21 @@ body{
   width:100%;
   margin-top:15px;
   padding:13px;
-  border:0;
-  border-radius:10px;
   background:#111;
-  color:white;
+  color:#fff;
   text-align:center;
   text-decoration:none;
-  font-size:16px;
+  border-radius:10px;
   font-weight:bold;
 }
 
-/* IMAGE VIEWER */
+/* VIEWER */
 .viewer{
   display:none;
   position:fixed;
-  z-index:9999;
   inset:0;
-  background:rgba(0,0,0,.94);
+  z-index:9999;
+  background:rgba(0,0,0,.95);
   align-items:center;
   justify-content:center;
 }
@@ -193,9 +187,9 @@ body{
   display:flex;
 }
 
-.viewer img{
-  max-width:95%;
-  max-height:85%;
+.viewer-image{
+  max-width:90%;
+  max-height:82%;
   object-fit:contain;
   transition:transform .2s ease;
 }
@@ -204,10 +198,31 @@ body{
   position:absolute;
   top:15px;
   right:20px;
-  color:white;
-  font-size:35px;
-  background:none;
   border:0;
+  background:none;
+  color:#fff;
+  font-size:38px;
+}
+
+.viewer-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+  font-size:28px;
+}
+
+.viewer-left{
+  left:15px;
+}
+
+.viewer-right{
+  right:15px;
 }
 
 .zoom-controls{
@@ -216,15 +231,15 @@ body{
   left:50%;
   transform:translateX(-50%);
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
 .zoom-controls button{
-  min-width:48px;
   height:42px;
+  min-width:48px;
   border:0;
   border-radius:8px;
-  font-size:20px;
+  font-size:18px;
 }
 
 /* MOBILE */
@@ -257,29 +272,527 @@ body{
 
 <body>
 
-<!-- COVER PHOTO -->
-<section
-  class="cover"
-  id="cover">
-</section>
+<section class="cover" id="cover"></section>
 
-<!-- PROFILE -->
 <section class="profile-area">
 
-  <img
-    id="profilePhoto"
-    class="profile-photo"
-    alt="Fancy Dress"
-  >
+<img
+  id="profilePhoto"
+  class="profile-photo"
+  alt="Fancy Dress">
 
-  <h1
-    class="store-name"
-    id="storeName">
-    Fancy Dress
-  </h1>
+<h1
+  id="storeName"
+  class="store-name">
+  Fancy Dress
+</h1>
 
-  <p class="store-intro">
-    Stylish Cotton Kurtis • Beautiful Designs • Easy WhatsApp Ordering
-  </p>
+<p class="store-intro">
+Stylish Cotton Kurtis • Beautiful Designs • Easy WhatsApp Ordering
+</p>
 
-</
+</section>
+
+<section class="collection">
+
+<h2 class="collection-title">
+Fancy Kurti Collection
+</h2>
+
+<p class="collection-subtitle">
+Explore our latest designs and order your favorite style on WhatsApp.
+</p>
+
+<div
+  id="posts"
+  class="posts">
+</div>
+
+</section>
+
+<div
+  id="viewer"
+  class="viewer">
+
+<button
+  class="close-viewer"
+  onclick="closeViewer()">
+×
+</button>
+
+<button
+  class="viewer-arrow viewer-left"
+  onclick="viewerPrevious()">
+‹
+</button>
+
+<img
+  id="viewerImage"
+  class="viewer-image"
+  alt="Product Image">
+
+<button
+  class="viewer-arrow viewer-right"
+  onclick="viewerNext()">
+›
+</button>
+
+<div class="zoom-controls">
+
+<button onclick="zoomOut()">−</button>
+
+<button onclick="resetZoom()">Reset</button>
+
+<button onclick="zoomIn()">+</button>
+
+</div>
+
+</div>
+
+<script src="data.js"></script>
+
+<script>
+
+/* IMAGE URL */
+
+const RAW_BASE =
+"https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/";
+
+function imageURL(image){
+
+  if(!image){
+    return "";
+  }
+
+  if(
+    image.startsWith("http://") ||
+    image.startsWith("https://")
+  ){
+    return image;
+  }
+
+  return RAW_BASE + image;
+}
+
+
+/* STORE INFORMATION */
+
+if(typeof STORE_DATA !== "undefined"){
+
+  if(STORE_DATA.coverImage){
+    document.getElementById("cover").style.backgroundImage =
+      "url('" + imageURL(STORE_DATA.coverImage) + "')";
+  }
+
+  if(STORE_DATA.profileImage){
+    document.getElementById("profilePhoto").src =
+      imageURL(STORE_DATA.profileImage);
+  }
+
+  if(STORE_DATA.brand){
+    document.getElementById("storeName").textContent =
+      STORE_DATA.brand;
+  }
+
+}
+
+
+/* PRODUCTS */
+
+const posts =
+document.getElementById("posts");
+
+const products =
+(typeof STORE_DATA !== "undefined" &&
+ Array.isArray(STORE_DATA.products))
+ ? STORE_DATA.products
+ : [];
+
+
+let viewerImages = [];
+let viewerIndex = 0;
+let zoomLevel = 1;
+
+
+products.forEach(function(product,index){
+
+  let images = [];
+
+  if(Array.isArray(product.images)){
+    images = product.images;
+  }
+  else if(product.image){
+    images = [product.image];
+  }
+
+  if(images.length === 0){
+    return;
+  }
+
+
+  const post =
+  document.createElement("div");
+
+  post.className = "post";
+
+
+  const gallery =
+  document.createElement("div");
+
+  gallery.className = "gallery";
+
+
+  const image =
+  document.createElement("img");
+
+  image.src =
+    imageURL(images[0]);
+
+  image.alt =
+    product.name ||
+    "Fancy Kurti Design " + (index + 1);
+
+
+  image.onclick =
+    function(){
+      openViewer(images,0);
+    };
+
+
+  gallery.appendChild(image);
+
+
+  if(images.length > 1){
+
+    const left =
+    document.createElement("button");
+
+    left.className =
+      "arrow left";
+
+    left.textContent = "‹";
+
+    left.onclick =
+      function(){
+        changeGalleryImage(
+          image,
+          images,
+          -1
+        );
+      };
+
+
+    const right =
+    document.createElement("button");
+
+    right.className =
+      "arrow right";
+
+    right.textContent = "›";
+
+    right.onclick =
+      function(){
+        changeGalleryImage(
+          image,
+          images,
+          1
+        );
+      };
+
+
+    const count =
+    document.createElement("div");
+
+    count.className =
+      "photo-count";
+
+    count.textContent =
+      "1 / " + images.length;
+
+
+    gallery.appendChild(left);
+    gallery.appendChild(right);
+    gallery.appendChild(count);
+
+
+    image.dataset.photoIndex = "0";
+
+  }
+
+
+  const info =
+  document.createElement("div");
+
+  info.className =
+    "product-info";
+
+
+  const name =
+  document.createElement("h3");
+
+  name.className =
+    "product-name";
+
+  name.textContent =
+    product.name ||
+    "Fancy Kurti Design " + String(index + 1).padStart(2,"0");
+
+
+  const price =
+  document.createElement("div");
+
+  price.className =
+    "price";
+
+  price.textContent =
+    "₹560";
+
+
+  const fabric =
+  document.createElement("div");
+
+  fabric.className =
+    "fabric";
+
+  fabric.textContent =
+    "Fabric: Cotton";
+
+
+  const description =
+  document.createElement("div");
+
+  description.className =
+    "description";
+
+  description.textContent =
+    product.description ||
+    "Beautiful cotton kurti with an elegant design and comfortable fit. Perfect for everyday wear and special occasions.";
+
+
+  const button =
+  document.createElement("a");
+
+  button.className =
+    "order-btn";
+
+  const whatsapp =
+    (typeof STORE_DATA !== "undefined" &&
+     STORE_DATA.whatsapp)
+    ? STORE_DATA.whatsapp
+    : "919119392297";
+
+
+  const message =
+    "Hello, I want to order " +
+    (name.textContent) +
+    ". Price: ₹560. Fabric: Cotton.";
+
+
+  button.href =
+    "https://wa.me/" +
+    whatsapp +
+    "?text=" +
+    encodeURIComponent(message);
+
+  button.target =
+    "_blank";
+
+  button.textContent =
+    "Order on WhatsApp";
+
+
+  info.appendChild(name);
+  info.appendChild(price);
+  info.appendChild(fabric);
+  info.appendChild(description);
+  info.appendChild(button);
+
+
+  post.appendChild(gallery);
+  post.appendChild(info);
+
+  posts.appendChild(post);
+
+});
+
+
+/* GALLERY */
+
+function changeGalleryImage(
+  image,
+  images,
+  direction
+){
+
+  let current =
+    parseInt(image.dataset.photoIndex || "0");
+
+  current += direction;
+
+  if(current < 0){
+    current = images.length - 1;
+  }
+
+  if(current >= images.length){
+    current = 0;
+  }
+
+  image.src =
+    imageURL(images[current]);
+
+  image.dataset.photoIndex =
+    current;
+
+  const count =
+    image.parentElement.querySelector(".photo-count");
+
+  if(count){
+    count.textContent =
+      (current + 1) +
+      " / " +
+      images.length;
+  }
+
+}
+
+
+/* VIEWER */
+
+function openViewer(
+  images,
+  index
+){
+
+  viewerImages =
+    images;
+
+  viewerIndex =
+    index;
+
+  zoomLevel =
+    1;
+
+  document
+    .getElementById("viewer")
+    .classList.add("active");
+
+  showViewerImage();
+
+}
+
+
+function showViewerImage(){
+
+  const viewerImage =
+    document.getElementById("viewerImage");
+
+  viewerImage.src =
+    imageURL(
+      viewerImages[viewerIndex]
+    );
+
+  viewerImage.style.transform =
+    "scale(" + zoomLevel + ")";
+}
+
+
+function viewerPrevious(){
+
+  if(viewerImages.length === 0){
+    return;
+  }
+
+  viewerIndex--;
+
+  if(viewerIndex < 0){
+    viewerIndex =
+      viewerImages.length - 1;
+  }
+
+  zoomLevel = 1;
+
+  showViewerImage();
+}
+
+
+function viewerNext(){
+
+  if(viewerImages.length === 0){
+    return;
+  }
+
+  viewerIndex++;
+
+  if(viewerIndex >= viewerImages.length){
+    viewerIndex = 0;
+  }
+
+  zoomLevel = 1;
+
+  showViewerImage();
+}
+
+
+function closeViewer(){
+
+  document
+    .getElementById("viewer")
+    .classList.remove("active");
+
+}
+
+
+function zoomIn(){
+
+  zoomLevel += .25;
+
+  if(zoomLevel > 3){
+    zoomLevel = 3;
+  }
+
+  showViewerImage();
+
+}
+
+
+function zoomOut(){
+
+  zoomLevel -= .25;
+
+  if(zoomLevel < .5){
+    zoomLevel = .5;
+  }
+
+  showViewerImage();
+
+}
+
+
+function resetZoom(){
+
+  zoomLevel = 1;
+
+  showViewerImage();
+
+}
+
+
+/* CLOSE VIEWER BY CLICKING BACKGROUND */
+
+document
+  .getElementById("viewer")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(event.target === this){
+        closeViewer();
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
