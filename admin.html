@@ -1,1 +1,855 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><style>body{font-family:Arial;background:#f5f5f5;margin:0}.wrap{max-width:850px;margin:auto;padding:20px}.panel{background:#fff;padding:20px;border-radius:14px;margin-bottom:15px}input,textarea{width:100%;padding:11px;margin:5px 0 12px;border:1px solid #ddd;border-radius:8px}button{background:#111;color:#fff;border:0;padding:11px 15px;border-radius:8px;cursor:pointer}.hidden{display:none}.item{padding:12px 0;border-top:1px solid #eee}</style></head><body><div class="wrap"><h1>Kurti Collection Admin</h1><div id="login" class="panel"><input id="email" placeholder="Admin email"><input id="password" type="password" placeholder="Password"><button onclick="login()">Login</button><p id="error"></p></div><div id="app" class="hidden"><div class="panel"><h2>Store Settings</h2><input id="brand" placeholder="Store name"><input id="title" placeholder="Heading"><input id="subtitle" placeholder="Subtitle"><input id="whatsapp" placeholder="WhatsApp number, e.g. 919119392297"><button onclick="save()">Save & Download data.js</button></div><div class="panel"><h2>Product जोड़ें</h2><input id="name" placeholder="Product name"><input id="price" placeholder="Price"><input id="image" placeholder="Image URL"><textarea id="description" placeholder="Description"></textarea><button onclick="add()">Add Product</button></div><div class="panel"><h2>Products</h2><div id="list"></div></div></div></div><script src="data.js"></script><script>let d=JSON.parse(JSON.stringify(STORE_DATA));function login(){if(email.value.trim()==='kurticollection701@gmail.com'&&password.value==='Pooja@@2'){document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');fill()}else error.textContent='Login details गलत हैं'}function fill(){brand.value=d.brand;title.value=d.title;subtitle.value=d.subtitle;whatsapp.value=d.whatsapp;render()}function save(){d.brand=brand.value;d.title=title.value;d.subtitle=subtitle.value;d.whatsapp=whatsapp.value.replace(/\D/g,'');download()}function add(){d.products.push({name:name.value,price:price.value,image:image.value,description:description.value});name.value=price.value=image.value=description.value='';render();download()}function render(){list.innerHTML=d.products.map((p,i)=>'<div class="item"><b>'+p.name+'</b> — ₹'+p.price+' <button onclick="d.products.splice('+i+',1);render();download()">Delete</button></div>').join('')}function download(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['const STORE_DATA='+JSON.stringify(d)+';'],{type:'application/javascript'}));a.download='data.js';a.click()}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fancy Dress Admin</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f5f5;
+  color:#222;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+
+.header{
+  background:#111;
+  color:white;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:18px;
+}
+
+.header h1{
+  margin:0 0 6px;
+  font-size:26px;
+}
+
+.header p{
+  margin:0;
+  opacity:.85;
+}
+
+.card{
+  background:white;
+  padding:18px;
+  border-radius:15px;
+  margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.card h2{
+  margin-top:0;
+  font-size:21px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:13px 0 6px;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 16px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:12px;
+}
+
+.primary{
+  background:#111;
+  color:white;
+}
+
+.secondary{
+  background:#e9e9e9;
+  color:#111;
+}
+
+.danger{
+  background:#d93025;
+  color:white;
+}
+
+.product{
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:15px;
+  margin-top:15px;
+}
+
+.product-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.small{
+  color:#666;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.image-box{
+  margin-top:10px;
+}
+
+.image-box input{
+  margin-bottom:8px;
+}
+
+.notice{
+  background:#fff8d8;
+  border:1px solid #eadb75;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
+  line-height:1.5;
+}
+
+.success{
+  background:#e7f7e7;
+  border:1px solid #9bd09b;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+  margin-top:12px;
+}
+
+.error{
+  background:#ffe8e8;
+  border:1px solid #e0a0a0;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+  margin-top:12px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #eee;
+  margin:20px 0;
+}
+
+.preview{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.preview img{
+  width:90px;
+  height:110px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Fancy Dress Admin</h1>
+    <p>Manage your store, products and images.</p>
+  </div>
+
+  <div class="notice">
+    <b>Important:</b> After making changes, click
+    <b>Download data.js</b>.
+    Then replace the old <b>data.js</b> file in your GitHub repository.
+  </div>
+
+  <!-- STORE SETTINGS -->
+
+  <div class="card">
+
+    <h2>Store Settings</h2>
+
+    <label>Store Name</label>
+    <input id="brand" value="Fancy Dress">
+
+    <label>Collection Heading</label>
+    <input id="title" value="Fancy Kurti Collection">
+
+    <label>Collection Description</label>
+    <textarea id="subtitle">Explore our latest cotton kurti designs and order your favorite style on WhatsApp.</textarea>
+
+    <label>WhatsApp Number</label>
+    <input id="whatsapp" value="919119392297">
+
+    <label>Cover / Background Image URL</label>
+    <input
+      id="coverImage"
+      value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png"
+    >
+
+    <label>Profile Image URL</label>
+    <input
+      id="profileImage"
+      value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg"
+    >
+
+  </div>
+
+
+  <!-- PRODUCTS -->
+
+  <div class="card">
+
+    <h2>Products</h2>
+
+    <div id="products"></div>
+
+    <button class="primary" onclick="addProduct()">
+      + Add New Product
+    </button>
+
+  </div>
+
+
+  <!-- SAVE -->
+
+  <div class="card">
+
+    <h2>Save Changes</h2>
+
+    <p>
+      Generate the updated <b>data.js</b> file after editing your products.
+    </p>
+
+    <button class="primary" onclick="downloadDataJS()">
+      Download data.js
+    </button>
+
+    <button class="secondary" onclick="loadCurrentData()">
+      Reload Current Data
+    </button>
+
+    <div id="success" class="success"></div>
+    <div id="error" class="error"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ---------------------------------------------------
+   DEFAULT STORE DATA
+--------------------------------------------------- */
+
+let storeData = {
+
+  brand: "Fancy Dress",
+
+  title: "Fancy Kurti Collection",
+
+  subtitle:
+    "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.",
+
+  whatsapp: "919119392297",
+
+  coverImage:
+    "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png",
+
+  profileImage:
+    "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg",
+
+  products: []
+
+};
+
+
+/* ---------------------------------------------------
+   LOAD DATA
+--------------------------------------------------- */
+
+async function loadCurrentData(){
+
+  hideMessages();
+
+  try{
+
+    const response = await fetch(
+      "data.js?v=" + Date.now()
+    );
+
+    if(!response.ok){
+      throw new Error("data.js could not be loaded.");
+    }
+
+    const text = await response.text();
+
+    const match = text.match(
+      /const\s+STORE_DATA\s*=\s*(\{[\s\S]*\});?\s*$/
+    );
+
+    if(!match){
+      throw new Error("STORE_DATA was not found in data.js.");
+    }
+
+    try{
+
+      const loaded = Function(
+        "return " + match[1]
+      )();
+
+      if(loaded && typeof loaded === "object"){
+
+        storeData = loaded;
+
+        if(!Array.isArray(storeData.products)){
+          storeData.products = [];
+        }
+
+        fillStoreSettings();
+
+        renderProducts();
+
+        showSuccess(
+          "Current data.js loaded successfully."
+        );
+
+      }else{
+
+        throw new Error("Invalid STORE_DATA.");
+
+      }
+
+    }catch(e){
+
+      throw new Error(
+        "Could not read STORE_DATA: " + e.message
+      );
+
+    }
+
+  }catch(error){
+
+    showError(
+      error.message +
+      " You can continue with the default settings."
+    );
+
+    fillStoreSettings();
+
+    renderProducts();
+
+  }
+
+}
+
+
+/* ---------------------------------------------------
+   FILL STORE SETTINGS
+--------------------------------------------------- */
+
+function fillStoreSettings(){
+
+  document.getElementById("brand").value =
+    storeData.brand || "Fancy Dress";
+
+  document.getElementById("title").value =
+    storeData.title || "Fancy Kurti Collection";
+
+  document.getElementById("subtitle").value =
+    storeData.subtitle ||
+    "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.";
+
+  document.getElementById("whatsapp").value =
+    storeData.whatsapp || "919119392297";
+
+  document.getElementById("coverImage").value =
+    storeData.coverImage || "";
+
+  document.getElementById("profileImage").value =
+    storeData.profileImage || "";
+
+}
+
+
+/* ---------------------------------------------------
+   ADD PRODUCT
+--------------------------------------------------- */
+
+function addProduct(){
+
+  if(!Array.isArray(storeData.products)){
+    storeData.products = [];
+  }
+
+  const number =
+    storeData.products.length + 1;
+
+  storeData.products.push({
+
+    name:
+      "Fancy Kurti Design " +
+      String(number).padStart(2,"0"),
+
+    price: "560",
+
+    image: "",
+
+    images: ["","","","",""],
+
+    description:
+      "Beautiful cotton kurti design with an elegant and comfortable look. " +
+      "Soft cotton fabric makes it suitable for comfortable everyday wear. " +
+      "A stylish choice for casual and festive occasions."
+
+  });
+
+  renderProducts();
+
+}
+
+
+/* ---------------------------------------------------
+   RENDER PRODUCTS
+--------------------------------------------------- */
+
+function renderProducts(){
+
+  const box =
+    document.getElementById("products");
+
+  box.innerHTML = "";
+
+  if(!storeData.products.length){
+
+    box.innerHTML =
+      "<p>No products added yet.</p>";
+
+    return;
+
+  }
+
+
+  storeData.products.forEach(
+    (product,index)=>{
+
+      if(!Array.isArray(product.images)){
+
+        product.images = [];
+
+        if(product.image){
+          product.images.push(product.image);
+        }
+
+      }
+
+      while(product.images.length < 5){
+        product.images.push("");
+      }
+
+      if(!product.name){
+        product.name =
+          "Fancy Kurti Design " +
+          String(index+1).padStart(2,"0");
+      }
+
+      if(!product.price){
+        product.price = "560";
+      }
+
+
+      const div =
+        document.createElement("div");
+
+      div.className = "product";
+
+
+      div.innerHTML = `
+
+        <div class="product-title">
+          ${escapeHTML(product.name)}
+        </div>
+
+        <div class="small">
+          Product ${index + 1}
+        </div>
+
+        <label>Product Name</label>
+
+        <input
+          value="${escapeAttr(product.name)}"
+          oninput="updateProduct(${index},'name',this.value)"
+        >
+
+
+        <label>Price</label>
+
+        <input
+          value="${escapeAttr(product.price || "560")}"
+          oninput="updateProduct(${index},'price',this.value)"
+        >
+
+
+        <label>Description</label>
+
+        <textarea
+          oninput="updateProduct(${index},'description',this.value)"
+        >${escapeHTML(product.description || "")}</textarea>
+
+
+        <label>Product Images</label>
+
+        <div class="small">
+          Add up to 5 different image URLs.
+        </div>
+
+
+        <div class="image-box">
+
+          ${[0,1,2,3,4].map(
+            imageIndex => `
+
+              <input
+                placeholder="Image ${imageIndex + 1} URL"
+                value="${escapeAttr(product.images[imageIndex] || "")}"
+                oninput="updateImage(${index},${imageIndex},this.value)"
+              >
+
+            `
+          ).join("")}
+
+        </div>
+
+
+        <div class="preview" id="preview-${index}">
+
+          ${product.images
+            .filter(Boolean)
+            .map(
+              url =>
+                `<img src="${escapeAttr(url)}"
+                 onerror="this.style.display='none'">`
+            )
+            .join("")
+          }
+
+        </div>
+
+
+        <button
+          class="danger"
+          onclick="deleteProduct(${index})"
+        >
+          Delete Product
+        </button>
+
+      `;
+
+
+      box.appendChild(div);
+
+    }
+  );
+
+}
+
+
+/* ---------------------------------------------------
+   UPDATE PRODUCT
+--------------------------------------------------- */
+
+function updateProduct(index,key,value){
+
+  storeData.products[index][key] =
+    value;
+
+  if(key === "price" && !value){
+    storeData.products[index].price =
+      "560";
+  }
+
+}
+
+
+/* ---------------------------------------------------
+   UPDATE IMAGE
+--------------------------------------------------- */
+
+function updateImage(
+  productIndex,
+  imageIndex,
+  value
+){
+
+  const product =
+    storeData.products[productIndex];
+
+  if(!Array.isArray(product.images)){
+    product.images = [];
+  }
+
+  product.images[imageIndex] =
+    value;
+
+  if(imageIndex === 0){
+
+    product.image =
+      value;
+
+  }
+
+}
+
+
+/* ---------------------------------------------------
+   DELETE PRODUCT
+--------------------------------------------------- */
+
+function deleteProduct(index){
+
+  const product =
+    storeData.products[index];
+
+  const name =
+    product && product.name
+      ? product.name
+      : "this product";
+
+  if(
+    confirm(
+      "Delete " + name + "?"
+    )
+  ){
+
+    storeData.products.splice(
+      index,
+      1
+    );
+
+    renderProducts();
+
+  }
+
+}
+
+
+/* ---------------------------------------------------
+   COLLECT STORE SETTINGS
+--------------------------------------------------- */
+
+function collectStoreSettings(){
+
+  storeData.brand =
+    document.getElementById("brand").value.trim()
+    || "Fancy Dress";
+
+  storeData.title =
+    document.getElementById("title").value.trim()
+    || "Fancy Kurti Collection";
+
+  storeData.subtitle =
+    document.getElementById("subtitle").value.trim()
+    || "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.";
+
+  storeData.whatsapp =
+    document.getElementById("whatsapp").value
+    .replace(/\D/g,"");
+
+  storeData.coverImage =
+    document.getElementById("coverImage").value.trim();
+
+  storeData.profileImage =
+    document.getElementById("profileImage").value.trim();
+
+
+  storeData.products.forEach(
+    product => {
+
+      product.price =
+        product.price || "560";
+
+      product.images =
+        (product.images || [])
+          .filter(url => url && url.trim());
+
+      product.image =
+        product.images[0] || "";
+
+    }
+  );
+
+}
+
+
+/* ---------------------------------------------------
+   DOWNLOAD DATA.JS
+--------------------------------------------------- */
+
+function downloadDataJS(){
+
+  hideMessages();
+
+  try{
+
+    collectStoreSettings();
+
+
+    const output =
+`const STORE_DATA = ${JSON.stringify(
+  storeData,
+  null,
+  2
+)};`;
+
+
+    const blob =
+      new Blob(
+        [output],
+        {
+          type:
+            "application/javascript"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const a =
+      document.createElement("a");
+
+    a.href = url;
+
+    a.download = "data.js";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+
+
+    showSuccess(
+      "data.js has been downloaded successfully. Now replace the old data.js file in GitHub."
+    );
+
+  }catch(error){
+
+    showError(
+      "Could not create data.js: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------
+   HTML SAFETY
+--------------------------------------------------- */
+
+function escapeHTML(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+  return escapeHTML(value);
+
+}
+
+
+/* ---------------------------------------------------
+   MESSAGES
+--------------------------------------------------- */
+
+function showSuccess(message){
+
+  const box =
+    document.getElementById("success");
+
+  box.textContent = message;
+
+  box.style.display = "block";
+
+}
+
+
+function showError(message){
+
+  const box =
+    document.getElementById("error");
+
+  box.textContent = message;
+
+  box.style.display = "block";
+
+}
+
+
+function hideMessages(){
+
+  document.getElementById("success")
+    .style.display = "none";
+
+  document.getElementById("error")
+    .style.display = "none";
+
+}
+
+
+/* ---------------------------------------------------
+   START
+--------------------------------------------------- */
+
+fillStoreSettings();
+
+renderProducts();
+
+loadCurrentData();
+
+</script>
+
+</body>
+  </html>
