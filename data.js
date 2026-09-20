@@ -105,15 +105,32 @@ const descriptions = [
   "Fashionable Cotton Kurti with an eye-catching design. Comfortable fabric makes it perfect for regular and casual wear."
 ];
 
-const products = imageFiles.map((file, index) => ({
-  name: `Fancy Kurti Design ${String(index + 1).padStart(2, "0")}`,
-  price: "560",
-  fabric: "Cotton",
-  images: [
-    IMAGE_BASE + encodeURIComponent(file)
-  ],
-  description: descriptions[index % descriptions.length]
-}));
+/*
+  Every product has an images array.
+  This allows one product to have 1, 2, 3, 4 or 5 photos later.
+*/
+
+const products = imageFiles.map((file, index) => {
+  const number = String(index + 1).padStart(2, "0");
+
+  return {
+    id: `fancy-kurti-${index + 1}`,
+
+    name: `Fancy Kurti Design ${number}`,
+
+    price: 560,
+
+    currency: "INR",
+
+    fabric: "Cotton",
+
+    images: [
+      IMAGE_BASE + encodeURIComponent(file)
+    ],
+
+    description: descriptions[index % descriptions.length]
+  };
+});
 
 window.STORE_DATA = {
   brand: "Fancy Dress",
