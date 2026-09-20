@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fancy Dress - Fancy Kurti Collection</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f2f5;color:#222}.page{max-width:1100px;margin:auto;background:#fff;min-height:100vh}.cover{height:300px;background:#ddd;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.profile{padding:0 20px 22px}.profile-photo{width:145px;height:145px;margin-top:-72px;border:6px solid #fff;border-radius:50%;overflow:hidden;background:#eee;box-shadow:0 2px 10px #999}.profile-photo img{width:100%;height:100%;object-fit:cover}.name{font-size:28px;font-weight:bold;margin-top:10px}.subtitle{color:#666;margin-top:7px}.head{padding:22px 20px 10px;border-top:1px solid #eee}.head h2{font-size:25px}.head p{color:#666;font-size:14px;margin-top:5px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:20px}.product{border:1px solid #e5e5e5;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #ddd}.gallery{position:relative;aspect-ratio:4/5;background:#eee}.main-img{width:100%;height:100%;object-fit:cover;cursor:zoom-in}.arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:50%;background:#0009;color:#fff;font-size:26px}.left{left:10px}.right{right:10px}.count{position:absolute;right:10px;top:10px;background:#000b;color:#fff;padding:5px 9px;border-radius:20px;font-size:12px}.thumbs{display:flex;gap:6px;padding:7px;overflow-x:auto}.thumb{width:52px;height:62px;object-fit:cover;border:2px solid transparent;border-radius:5px}.thumb.active{border-color:#1877f2}.info{padding:14px}.info h3{font-size:18px;margin-bottom:8px}.price{font-size:20px;font-weight:bold;margin-bottom:6px}.fabric{font-size:14px;color:#555;margin-bottom:10px}.desc{font-size:14px;color:#555;line-height:1.55;min-height:64px;margin-bottom:13px}.order{width:100%;padding:12px;border:0;border-radius:8px;background:#25d366;color:white;font-size:16px;font-weight:bold}.footer{text-align:center;padding:25px;color:#777;border-top:1px solid #eee}.viewer{display:none;position:fixed;inset:0;background:#000f;z-index:9999;align-items:center;justify-content:center}.viewer.show{display:flex}.viewer img{max-width:90vw;max-height:82vh;object-fit:contain}.close,.varrow,.zoom{position:absolute;border:0;border-radius:50%;background:#fff3;color:#fff}.close{top:15px;right:18px;width:44px;height:44px;font-size:30px}.varrow{top:50%;width:50px;height:50px;transform:translateY(-50%);font-size:32px}.varrow.l{left:15px}.varrow.r{right:15px}.zooms{position:absolute;bottom:25px;display:flex;gap:10px}.zoom{position:static;width:48px;height:48px;font-size:25px}.vtitle{position:absolute;top:20px;left:20px;color:#fff}@media(max-width:800px){.products{grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}.cover{height:230px}.profile-photo{width:120px;height:120px;margin-top:-60px}.name{font-size:23px}}@media(max-width:480px){.products{grid-template-columns:1fr}.cover{height:210px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="cover"><img id="coverImage" alt="Fancy Dress Cover"></div>
+<section class="profile"><div class="profile-photo"><img id="profileImage" alt="Fancy Dress"></div><div class="name" id="storeName">Fancy Dress</div><div class="subtitle" id="subtitle">Explore our latest designs and order your favorite style on WhatsApp.</div></section>
+<section class="head"><h2 id="title">Fancy Kurti Collection</h2><p>Cotton designs • ₹560 each • Order directly on WhatsApp</p></section>
+<main class="products" id="products"></main>
+<footer class="footer">© <span id="year"></span> Fancy Dress. All Rights Reserved.</footer>
+</div>
+
+<div class="viewer" id="viewer"><div class="vtitle" id="vtitle"></div><button class="close" onclick="closeViewer()">×</button><button class="varrow l" onclick="prev()">‹</button><img id="vimg"><button class="varrow r" onclick="next()">›</button><div class="zooms"><button class="zoom" onclick="out()">−</button><button class="zoom" onclick="reset()">1×</button><button class="zoom" onclick="inZoom()">+</button></div></div>
+
+<script src="data.js?v=3001"></script>
+<script>
+const BASE="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/";
+let store=typeof STORE_DATA!=="undefined"?STORE_DATA:window.STORE_DATA;
+const states={};
+function url(x){if(!x)return"";return x.startsWith("http")?x:BASE+encodeURIComponent(x)}
+function imgs(p){return Array.isArray(p.images)&&p.images.length?p.images:p.image?[p.image]:[]}
+function render(){
+if(!store)return;
+document.getElementById("storeName").textContent=store.brand||"Fancy Dress";
+document.getElementById("subtitle").textContent=store.subtitle||"Explore our latest designs and order your favorite style on WhatsApp.";
+document.getElementById("title").textContent=store.title||"Fancy Kurti Collection";
+document.getElementById("coverImage").src=url(store.coverImage);
+document.getElementById("profileImage").src=url(store.profileImage);
+const box=document.getElementById("products");box.innerHTML="";
+(store.products||[]).forEach((p,i)=>{
+let a=imgs(p);if(!a.length)return;if(states[i]===undefined)states[i]=0;
+let c=document.createElement("article");c.className="product";
+let g=document.createElement("div");g.className="gallery";
+let im=document.createElement("img");im.className="main-img";im.src=url(a[states[i]]);im.onclick=()=>openViewer(i,states[i],a);g.appendChild(im);
+if(a.length>1){let co=document.createElement("div");co.className="count";co.textContent=(states[i]+1)+" / "+a.length;g.appendChild(co);let l=document.createElement("button");l.className="arrow left";l.innerHTML="‹";l.onclick=()=>change(i,-1);g.appendChild(l);let r=document.createElement("button");r.className="arrow right";r.innerHTML="›";r.onclick=()=>change(i,1);g.appendChild(r)}
+c.appendChild(g);
+if(a.length>1){let ts=document.createElement("div");ts.className="thumbs";a.forEach((x,j)=>{let t=document.createElement("img");t.className="thumb"+(j===states[i]?" active":"");t.src=url(x);t.onclick=()=>{states[i]=j;render()};ts.appendChild(t)});c.appendChild(ts)}
+let info=document.createElement("div");info.className="info";
+info.innerHTML="<h3>"+(p.name||("Fancy Kurti Design "+String(i+1).padStart(2,"0")))+"</h3><div class='price'>₹"+(p.price||"560")+"</div><div class='fabric'>Fabric: "+(p.fabric||"Cotton")+"</div><div class='desc'>"+(p.description||"Beautiful cotton kurti design with a comfortable fit and stylish look.")+"</div>";
+let b=document.createElement("button");b.className="order";b.textContent="Order on WhatsApp";b.onclick=()=>order(p,a[states[i]]);info.appendChild(b);c.appendChild(info);box.appendChild(c)
+})}
+function change(i,d){let a=imgs(store.products[i]);states[i]=(states[i]+d+a.length)%a.length;render()}
+function order(p,image){let no=store.whatsapp||"919119392297";let text="Hello, I would like to order this dress.\n\nProduct: "+(p.name||"Fancy Kurti Design")+"\nPrice: ₹"+(p.price||"560")+"\nFabric: "+(p.fabric||"Cotton")+"\n\nProduct Photo:\n"+url(image);window.open("https://wa.me/"+no+"?text="+encodeURIComponent(text),"_blank")}
+let vi=0,vj=0,va=[],zoom=1;
+function openViewer(i,j,a){vi=i;vj=j;va=a;zoom=1;updateViewer();document.getElementById("viewer").classList.add("show");document.body.style.overflow="hidden"}
+function closeViewer(){document.getElementById("viewer").classList.remove("show");document.body.style.overflow=""}
+function updateViewer(){document.getElementById("vimg").src=url(va[vj]);document.getElementById("vimg").style.transform="scale("+zoom+")";document.getElementById("vtitle").textContent=store.products[vi].name||"Product"}
+function next(){if(va.length){vj=(vj+1)%va.length;zoom=1;updateViewer()}}
+function prev(){if(va.length){vj=(vj-1+va.length)%va.length;zoom=1;updateViewer()}}
+function inZoom(){zoom=Math.min(4,zoom+.25);updateViewer()}
+function out(){zoom=Math.max(.5,zoom-.25);updateViewer()}
+function reset(){zoom=1;updateViewer()}
+document.addEventListener("keydown",e=>{if(!document.getElementById("viewer").classList.contains("show"))return;if(e.key==="Escape")closeViewer();if(e.key==="ArrowRight")next();if(e.key==="ArrowLeft")prev();if(e.key==="+")inZoom();if(e.key==="-")out()});
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
