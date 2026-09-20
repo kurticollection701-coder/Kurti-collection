@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0"
+>
 
 <title>Fancy Dress Admin</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -14,11 +20,11 @@
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#f5f5f5;
+  background:#f3f3f3;
   color:#222;
 }
 
-.container{
+.wrap{
   max-width:900px;
   margin:auto;
   padding:18px;
@@ -32,17 +38,7 @@ body{
   margin-bottom:18px;
 }
 
-.header h1{
-  margin:0 0 6px;
-  font-size:26px;
-}
-
-.header p{
-  margin:0;
-  opacity:.85;
-}
-
-.card{
+.panel{
   background:white;
   padding:18px;
   border-radius:15px;
@@ -50,15 +46,14 @@ body{
   box-shadow:0 2px 10px rgba(0,0,0,.06);
 }
 
-.card h2{
+h1,h2{
   margin-top:0;
-  font-size:21px;
 }
 
 label{
   display:block;
   font-weight:bold;
-  margin:13px 0 6px;
+  margin:12px 0 6px;
 }
 
 input,
@@ -72,508 +67,397 @@ textarea{
 
 textarea{
   min-height:90px;
-  resize:vertical;
 }
 
 button{
+  padding:12px 16px;
   border:0;
   border-radius:9px;
-  padding:12px 16px;
-  font-size:15px;
+  background:#111;
+  color:white;
   font-weight:bold;
-  cursor:pointer;
   margin-top:12px;
 }
 
-.primary{
-  background:#111;
-  color:white;
+.add{
+  background:#087f23;
 }
 
-.secondary{
-  background:#e9e9e9;
-  color:#111;
-}
-
-.danger{
-  background:#d93025;
-  color:white;
+.delete{
+  background:#d22;
 }
 
 .product{
   border:1px solid #ddd;
-  border-radius:12px;
   padding:15px;
+  border-radius:12px;
   margin-top:15px;
-}
-
-.product-title{
-  font-size:18px;
-  font-weight:bold;
 }
 
 .small{
   color:#666;
   font-size:13px;
-  margin-top:5px;
 }
 
-.image-box{
-  margin-top:10px;
-}
-
-.image-box input{
-  margin-bottom:8px;
-}
-
-.notice{
-  background:#fff8d8;
-  border:1px solid #eadb75;
+.message{
   padding:12px;
-  border-radius:10px;
-  margin-bottom:15px;
-  line-height:1.5;
+  border-radius:9px;
+  margin-top:12px;
+  display:none;
 }
 
 .success{
-  background:#e7f7e7;
-  border:1px solid #9bd09b;
-  padding:12px;
-  border-radius:10px;
-  display:none;
-  margin-top:12px;
+  background:#e5f7e8;
+  border:1px solid #9bd0a3;
 }
 
 .error{
-  background:#ffe8e8;
-  border:1px solid #e0a0a0;
-  padding:12px;
-  border-radius:10px;
-  display:none;
-  margin-top:12px;
+  background:#ffe5e5;
+  border:1px solid #d99;
 }
 
-hr{
-  border:0;
-  border-top:1px solid #eee;
-  margin:20px 0;
-}
-
-.preview{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-
-.preview img{
-  width:90px;
-  height:110px;
-  object-fit:cover;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrap">
 
-  <div class="header">
-    <h1>Fancy Dress Admin</h1>
-    <p>Manage your store, products and images.</p>
-  </div>
+<div class="header">
 
-  <div class="notice">
-    <b>Important:</b> After making changes, click
-    <b>Download data.js</b>.
-    Then replace the old <b>data.js</b> file in your GitHub repository.
-  </div>
+<h1>Fancy Dress Admin</h1>
 
-  <!-- STORE SETTINGS -->
+<p>
+Manage your store and products.
+</p>
 
-  <div class="card">
-
-    <h2>Store Settings</h2>
-
-    <label>Store Name</label>
-    <input id="brand" value="Fancy Dress">
-
-    <label>Collection Heading</label>
-    <input id="title" value="Fancy Kurti Collection">
-
-    <label>Collection Description</label>
-    <textarea id="subtitle">Explore our latest cotton kurti designs and order your favorite style on WhatsApp.</textarea>
-
-    <label>WhatsApp Number</label>
-    <input id="whatsapp" value="919119392297">
-
-    <label>Cover / Background Image URL</label>
-    <input
-      id="coverImage"
-      value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png"
-    >
-
-    <label>Profile Image URL</label>
-    <input
-      id="profileImage"
-      value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg"
-    >
-
-  </div>
+</div>
 
 
-  <!-- PRODUCTS -->
+<div class="panel">
 
-  <div class="card">
-
-    <h2>Products</h2>
-
-    <div id="products"></div>
-
-    <button class="primary" onclick="addProduct()">
-      + Add New Product
-    </button>
-
-  </div>
+<h2>Store Settings</h2>
 
 
-  <!-- SAVE -->
+<label>Store Name</label>
 
-  <div class="card">
+<input
+  id="brand"
+  value="Fancy Dress"
+>
 
-    <h2>Save Changes</h2>
 
-    <p>
-      Generate the updated <b>data.js</b> file after editing your products.
-    </p>
+<label>Collection Title</label>
 
-    <button class="primary" onclick="downloadDataJS()">
-      Download data.js
-    </button>
+<input
+  id="title"
+  value="Fancy Kurti Collection"
+>
 
-    <button class="secondary" onclick="loadCurrentData()">
-      Reload Current Data
-    </button>
 
-    <div id="success" class="success"></div>
-    <div id="error" class="error"></div>
+<label>Website Description</label>
 
-  </div>
+<textarea id="subtitle">Explore our latest Cotton Kurti designs and order your favorite style on WhatsApp.</textarea>
+
+
+<label>WhatsApp Number</label>
+
+<input
+  id="whatsapp"
+  value="919119392297"
+>
+
+
+<label>Cover Image URL</label>
+
+<input
+  id="cover"
+  value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png"
+>
+
+
+<label>Profile Image URL</label>
+
+<input
+  id="profile"
+  value="https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg"
+>
+
+</div>
+
+
+<div class="panel">
+
+<h2>Products</h2>
+
+<div id="products"></div>
+
+<button
+  class="add"
+  onclick="addProduct()"
+>
++ Add New Product
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>Save</h2>
+
+<p>
+After making changes, download the new
+<b>data.js</b> and replace the old
+<b>data.js</b> file in GitHub.
+</p>
+
+<button onclick="downloadData()">
+Download data.js
+</button>
+
+<div
+  id="success"
+  class="message success">
+</div>
+
+<div
+  id="error"
+  class="message error">
+</div>
+
+</div>
 
 </div>
 
 
 <script>
 
-/* ---------------------------------------------------
-   DEFAULT STORE DATA
---------------------------------------------------- */
+let data = {
 
-let storeData = {
+  brand:"Fancy Dress",
 
-  brand: "Fancy Dress",
-
-  title: "Fancy Kurti Collection",
+  title:"Fancy Kurti Collection",
 
   subtitle:
-    "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.",
+    "Explore our latest Cotton Kurti designs and order your favorite style on WhatsApp.",
 
-  whatsapp: "919119392297",
+  whatsapp:"919119392297",
 
-  coverImage:
+  cover:
     "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/file_000000002880820ba259f14d92660b69.png",
 
-  profileImage:
+  profile:
     "https://raw.githubusercontent.com/kurticollection701-coder/Kurti-collection/main/23caf061f0ed205725b8495c7b94f6ab.jpg",
 
-  products: []
+  products:[]
 
 };
 
 
-/* ---------------------------------------------------
-   LOAD DATA
---------------------------------------------------- */
+function loadData(){
 
-async function loadCurrentData(){
+  if(
+    window.STORE_DATA
+  ){
 
-  hideMessages();
+    const old =
+      window.STORE_DATA;
 
-  try{
+    data.brand =
+      old.brand || data.brand;
 
-    const response = await fetch(
-      "data.js?v=" + Date.now()
-    );
+    data.title =
+      old.title || data.title;
 
-    if(!response.ok){
-      throw new Error("data.js could not be loaded.");
-    }
+    data.subtitle =
+      old.subtitle || data.subtitle;
 
-    const text = await response.text();
+    data.whatsapp =
+      old.whatsapp || data.whatsapp;
 
-    const match = text.match(
-      /const\s+STORE_DATA\s*=\s*(\{[\s\S]*\});?\s*$/
-    );
+    data.cover =
+      old.coverImage || data.cover;
 
-    if(!match){
-      throw new Error("STORE_DATA was not found in data.js.");
-    }
+    data.profile =
+      old.profileImage || data.profile;
 
-    try{
-
-      const loaded = Function(
-        "return " + match[1]
-      )();
-
-      if(loaded && typeof loaded === "object"){
-
-        storeData = loaded;
-
-        if(!Array.isArray(storeData.products)){
-          storeData.products = [];
-        }
-
-        fillStoreSettings();
-
-        renderProducts();
-
-        showSuccess(
-          "Current data.js loaded successfully."
-        );
-
-      }else{
-
-        throw new Error("Invalid STORE_DATA.");
-
-      }
-
-    }catch(e){
-
-      throw new Error(
-        "Could not read STORE_DATA: " + e.message
-      );
-
-    }
-
-  }catch(error){
-
-    showError(
-      error.message +
-      " You can continue with the default settings."
-    );
-
-    fillStoreSettings();
-
-    renderProducts();
+    data.products =
+      Array.isArray(old.products)
+        ? JSON.parse(
+            JSON.stringify(old.products)
+          )
+        : [];
 
   }
 
-}
-
-
-/* ---------------------------------------------------
-   FILL STORE SETTINGS
---------------------------------------------------- */
-
-function fillStoreSettings(){
 
   document.getElementById("brand").value =
-    storeData.brand || "Fancy Dress";
+    data.brand;
 
   document.getElementById("title").value =
-    storeData.title || "Fancy Kurti Collection";
+    data.title;
 
   document.getElementById("subtitle").value =
-    storeData.subtitle ||
-    "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.";
+    data.subtitle;
 
   document.getElementById("whatsapp").value =
-    storeData.whatsapp || "919119392297";
+    data.whatsapp;
 
-  document.getElementById("coverImage").value =
-    storeData.coverImage || "";
+  document.getElementById("cover").value =
+    data.cover;
 
-  document.getElementById("profileImage").value =
-    storeData.profileImage || "";
+  document.getElementById("profile").value =
+    data.profile;
 
-}
-
-
-/* ---------------------------------------------------
-   ADD PRODUCT
---------------------------------------------------- */
-
-function addProduct(){
-
-  if(!Array.isArray(storeData.products)){
-    storeData.products = [];
-  }
-
-  const number =
-    storeData.products.length + 1;
-
-  storeData.products.push({
-
-    name:
-      "Fancy Kurti Design " +
-      String(number).padStart(2,"0"),
-
-    price: "560",
-
-    image: "",
-
-    images: ["","","","",""],
-
-    description:
-      "Beautiful cotton kurti design with an elegant and comfortable look. " +
-      "Soft cotton fabric makes it suitable for comfortable everyday wear. " +
-      "A stylish choice for casual and festive occasions."
-
-  });
-
-  renderProducts();
+  render();
 
 }
 
 
-/* ---------------------------------------------------
-   RENDER PRODUCTS
---------------------------------------------------- */
-
-function renderProducts(){
+function render(){
 
   const box =
     document.getElementById("products");
 
-  box.innerHTML = "";
-
-  if(!storeData.products.length){
-
-    box.innerHTML =
-      "<p>No products added yet.</p>";
-
-    return;
-
-  }
+  box.innerHTML="";
 
 
-  storeData.products.forEach(
-    (product,index)=>{
+  data.products.forEach(
+    function(product,index){
 
       if(!Array.isArray(product.images)){
 
-        product.images = [];
-
-        if(product.image){
-          product.images.push(product.image);
-        }
+        product.images =
+          product.image
+            ? [product.image]
+            : [];
 
       }
+
 
       while(product.images.length < 5){
         product.images.push("");
-      }
-
-      if(!product.name){
-        product.name =
-          "Fancy Kurti Design " +
-          String(index+1).padStart(2,"0");
-      }
-
-      if(!product.price){
-        product.price = "560";
       }
 
 
       const div =
         document.createElement("div");
 
-      div.className = "product";
+      div.className =
+        "product";
 
 
       div.innerHTML = `
 
-        <div class="product-title">
-          ${escapeHTML(product.name)}
-        </div>
+<h3>
+${escapeHTML(
+  product.name ||
+  "Fancy Kurti Design " +
+  String(index+1).padStart(2,"0")
+)}
+</h3>
 
-        <div class="small">
-          Product ${index + 1}
-        </div>
+<label>Product Name</label>
 
-        <label>Product Name</label>
-
-        <input
-          value="${escapeAttr(product.name)}"
-          oninput="updateProduct(${index},'name',this.value)"
-        >
-
-
-        <label>Price</label>
-
-        <input
-          value="${escapeAttr(product.price || "560")}"
-          oninput="updateProduct(${index},'price',this.value)"
-        >
+<input
+value="${escapeAttr(
+  product.name ||
+  "Fancy Kurti Design " +
+  String(index+1).padStart(2,"0")
+)}"
+oninput="changeProduct(${index},'name',this.value)"
+>
 
 
-        <label>Description</label>
+<label>Price</label>
 
-        <textarea
-          oninput="updateProduct(${index},'description',this.value)"
-        >${escapeHTML(product.description || "")}</textarea>
-
-
-        <label>Product Images</label>
-
-        <div class="small">
-          Add up to 5 different image URLs.
-        </div>
+<input
+value="${escapeAttr(
+  product.price || "560"
+)}"
+oninput="changeProduct(${index},'price',this.value)"
+>
 
 
-        <div class="image-box">
+<label>Fabric</label>
 
-          ${[0,1,2,3,4].map(
-            imageIndex => `
-
-              <input
-                placeholder="Image ${imageIndex + 1} URL"
-                value="${escapeAttr(product.images[imageIndex] || "")}"
-                oninput="updateImage(${index},${imageIndex},this.value)"
-              >
-
-            `
-          ).join("")}
-
-        </div>
+<input
+value="${escapeAttr(
+  product.fabric || "Cotton"
+)}"
+oninput="changeProduct(${index},'fabric',this.value)"
+>
 
 
-        <div class="preview" id="preview-${index}">
+<label>Description</label>
 
-          ${product.images
-            .filter(Boolean)
-            .map(
-              url =>
-                `<img src="${escapeAttr(url)}"
-                 onerror="this.style.display='none'">`
-            )
-            .join("")
-          }
-
-        </div>
+<textarea
+oninput="changeProduct(${index},'description',this.value)"
+>${escapeHTML(
+  product.description || ""
+)}</textarea>
 
 
-        <button
-          class="danger"
-          onclick="deleteProduct(${index})"
-        >
-          Delete Product
-        </button>
+<label>Image 1</label>
 
-      `;
+<input
+value="${escapeAttr(
+  product.images[0] || ""
+)}"
+oninput="changeImage(${index},0,this.value)"
+>
 
+
+<label>Image 2</label>
+
+<input
+value="${escapeAttr(
+  product.images[1] || ""
+)}"
+oninput="changeImage(${index},1,this.value)"
+>
+
+
+<label>Image 3</label>
+
+<input
+value="${escapeAttr(
+  product.images[2] || ""
+)}"
+oninput="changeImage(${index},2,this.value)"
+>
+
+
+<label>Image 4</label>
+
+<input
+value="${escapeAttr(
+  product.images[3] || ""
+)}"
+oninput="changeImage(${index},3,this.value)"
+>
+
+
+<label>Image 5</label>
+
+<input
+value="${escapeAttr(
+  product.images[4] || ""
+)}"
+oninput="changeImage(${index},4,this.value)"
+>
+
+
+<button
+class="delete"
+onclick="deleteProduct(${index})"
+>
+Delete Product
+</button>
+
+`;
 
       box.appendChild(div);
 
@@ -583,157 +467,173 @@ function renderProducts(){
 }
 
 
-/* ---------------------------------------------------
-   UPDATE PRODUCT
---------------------------------------------------- */
+function changeProduct(
+  index,
+  field,
+  value
+){
 
-function updateProduct(index,key,value){
-
-  storeData.products[index][key] =
+  data.products[index][field] =
     value;
-
-  if(key === "price" && !value){
-    storeData.products[index].price =
-      "560";
-  }
 
 }
 
 
-/* ---------------------------------------------------
-   UPDATE IMAGE
---------------------------------------------------- */
-
-function updateImage(
-  productIndex,
+function changeImage(
+  index,
   imageIndex,
   value
 ){
 
-  const product =
-    storeData.products[productIndex];
-
-  if(!Array.isArray(product.images)){
-    product.images = [];
+  if(
+    !Array.isArray(
+      data.products[index].images
+    )
+  ){
+    data.products[index].images=[];
   }
 
-  product.images[imageIndex] =
+  data.products[index].images[imageIndex] =
     value;
 
-  if(imageIndex === 0){
-
-    product.image =
-      value;
-
-  }
+  data.products[index].image =
+    data.products[index].images[0];
 
 }
 
 
-/* ---------------------------------------------------
-   DELETE PRODUCT
---------------------------------------------------- */
+function addProduct(){
+
+  const number =
+    data.products.length + 1;
+
+
+  data.products.push({
+
+    name:
+      "Fancy Kurti Design " +
+      String(number).padStart(2,"0"),
+
+    price:"560",
+
+    fabric:"Cotton",
+
+    images:[""],
+
+    description:
+      "Beautiful Cotton Kurti with an elegant design and comfortable fit. Perfect for everyday wear and special occasions."
+
+  });
+
+
+  render();
+
+}
+
 
 function deleteProduct(index){
 
-  const product =
-    storeData.products[index];
-
-  const name =
-    product && product.name
-      ? product.name
-      : "this product";
-
   if(
     confirm(
-      "Delete " + name + "?"
+      "Delete this product?"
     )
   ){
 
-    storeData.products.splice(
+    data.products.splice(
       index,
       1
     );
 
-    renderProducts();
+    render();
 
   }
 
 }
 
 
-/* ---------------------------------------------------
-   COLLECT STORE SETTINGS
---------------------------------------------------- */
-
-function collectStoreSettings(){
-
-  storeData.brand =
-    document.getElementById("brand").value.trim()
-    || "Fancy Dress";
-
-  storeData.title =
-    document.getElementById("title").value.trim()
-    || "Fancy Kurti Collection";
-
-  storeData.subtitle =
-    document.getElementById("subtitle").value.trim()
-    || "Explore our latest cotton kurti designs and order your favorite style on WhatsApp.";
-
-  storeData.whatsapp =
-    document.getElementById("whatsapp").value
-    .replace(/\D/g,"");
-
-  storeData.coverImage =
-    document.getElementById("coverImage").value.trim();
-
-  storeData.profileImage =
-    document.getElementById("profileImage").value.trim();
-
-
-  storeData.products.forEach(
-    product => {
-
-      product.price =
-        product.price || "560";
-
-      product.images =
-        (product.images || [])
-          .filter(url => url && url.trim());
-
-      product.image =
-        product.images[0] || "";
-
-    }
-  );
-
-}
-
-
-/* ---------------------------------------------------
-   DOWNLOAD DATA.JS
---------------------------------------------------- */
-
-function downloadDataJS(){
-
-  hideMessages();
+function downloadData(){
 
   try{
 
-    collectStoreSettings();
+    data.brand =
+      document.getElementById("brand").value.trim();
+
+    data.title =
+      document.getElementById("title").value.trim();
+
+    data.subtitle =
+      document.getElementById("subtitle").value.trim();
+
+    data.whatsapp =
+      document
+        .getElementById("whatsapp")
+        .value
+        .replace(/\D/g,"");
+
+    data.cover =
+      document.getElementById("cover").value.trim();
+
+    data.profile =
+      document.getElementById("profile").value.trim();
 
 
-    const output =
-`const STORE_DATA = ${JSON.stringify(
-  storeData,
-  null,
-  2
-)};`;
+    const finalData = {
+
+      brand:data.brand,
+
+      title:data.title,
+
+      subtitle:data.subtitle,
+
+      whatsapp:data.whatsapp,
+
+      coverImage:data.cover,
+
+      profileImage:data.profile,
+
+      products:data.products.map(
+        function(product){
+
+          return {
+
+            name:
+              product.name ||
+              "Fancy Kurti Design",
+
+            price:
+              product.price || "560",
+
+            fabric:
+              product.fabric || "Cotton",
+
+            images:
+              (product.images || [])
+                .filter(Boolean),
+
+            description:
+              product.description || ""
+
+          };
+
+        }
+      )
+
+    };
+
+
+    const code =
+      "window.STORE_DATA = " +
+      JSON.stringify(
+        finalData,
+        null,
+        2
+      ) +
+      ";";
 
 
     const blob =
       new Blob(
-        [output],
+        [code],
         {
           type:
             "application/javascript"
@@ -745,24 +645,24 @@ function downloadDataJS(){
       URL.createObjectURL(blob);
 
 
-    const a =
+    const link =
       document.createElement("a");
 
-    a.href = url;
+    link.href=url;
 
-    a.download = "data.js";
+    link.download="data.js";
 
-    document.body.appendChild(a);
+    document.body.appendChild(link);
 
-    a.click();
+    link.click();
 
-    document.body.removeChild(a);
+    link.remove();
 
     URL.revokeObjectURL(url);
 
 
     showSuccess(
-      "data.js has been downloaded successfully. Now replace the old data.js file in GitHub."
+      "data.js downloaded successfully."
     );
 
   }catch(error){
@@ -776,10 +676,6 @@ function downloadDataJS(){
 
 }
 
-
-/* ---------------------------------------------------
-   HTML SAFETY
---------------------------------------------------- */
 
 function escapeHTML(value){
 
@@ -800,18 +696,16 @@ function escapeAttr(value){
 }
 
 
-/* ---------------------------------------------------
-   MESSAGES
---------------------------------------------------- */
-
 function showSuccess(message){
 
   const box =
     document.getElementById("success");
 
-  box.textContent = message;
+  box.textContent =
+    message;
 
-  box.style.display = "block";
+  box.style.display =
+    "block";
 
 }
 
@@ -821,33 +715,41 @@ function showError(message){
   const box =
     document.getElementById("error");
 
-  box.textContent = message;
+  box.textContent =
+    message;
 
-  box.style.display = "block";
-
-}
-
-
-function hideMessages(){
-
-  document.getElementById("success")
-    .style.display = "none";
-
-  document.getElementById("error")
-    .style.display = "none";
+  box.style.display =
+    "block";
 
 }
 
 
-/* ---------------------------------------------------
-   START
---------------------------------------------------- */
+const script =
+  document.createElement("script");
 
-fillStoreSettings();
+script.src =
+  "data.js?v=" +
+  Date.now();
 
-renderProducts();
+script.onload =
+  function(){
 
-loadCurrentData();
+    loadData();
+
+  };
+
+script.onerror =
+  function(){
+
+    showError(
+      "data.js could not be loaded."
+    );
+
+    render();
+
+  };
+
+document.body.appendChild(script);
 
 </script>
 
